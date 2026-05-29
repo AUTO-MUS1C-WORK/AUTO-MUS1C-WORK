@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+ <meta charset="gbk">
+<head>
+    <meta charset="gbk">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title> AUTO MUS1C</title>
+    <!-- 引入 Google Fonts 提升简约现代感 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (免费图标库，用于社交图标和菜单) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;   /* 纯黑背景 高对比黑白 */
+            color: #FFFFFF;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        /* 黑白高对比色彩核心：纯白、纯黑、极简灰点缀 */
+        :root {
+            --accent-primary: #FFFFFF;    /* 纯白主色调 */
+            --accent-secondary: #E0E0E0;  /* 浅灰辅助 */
+            --bg-dark: #000000;
+            --bg-card: #111111;
+            --border-glow: rgba(255, 255, 255, 0.3);
+            --text-light: #FFFFFF;
+            --text-muted: #AAAAAA;
+            --hover-bright: #333333;
+        }
+
+        /* 导航栏 + 汉堡菜单 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1rem 2rem;
+            transition: all 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            background: none;
+        }
+        .logo span {
+            color: #CCCCCC;
+        }
+
+        /* 桌面导航菜单 */
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #DDDDDD;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        /* 汉堡菜单按钮 (默认隐藏) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            z-index: 1100;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 2.5px;
+            background-color: #FFFFFF;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* 移动端导航覆盖层 */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            max-width: 300px;
+            height: 100vh;
+            background: #0A0A0A;
+            backdrop-filter: blur(20px);
+            z-index: 1050;
+            padding: 6rem 2rem 2rem;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.8);
+            transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            border-left: 1px solid rgba(255,255,255,0.2);
+        }
+        .mobile-nav a {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #FFFFFF;
+            text-decoration: none;
+            transition: 0.2s;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .mobile-nav a:hover {
+            color: #CCCCCC;
+            padding-left: 8px;
+        }
+        .mobile-nav.active {
+            right: 0;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(3px);
+            z-index: 1040;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+
+        /* 头部巨幅长图区 - 黑白高对比处理 */
+        .hero {
+            margin-top: 74px;
+            width: 100%;
+            height: 70vh;
+            min-height: 480px;
+            background: linear-gradient(107deg, #000000 0%, #1a1a1a 100%), url('https://picsum.photos/id/29/2000/800') center/cover no-repeat;
+            background-blend-mode: overlay;
+            background-image: url('TITLE PAGE.jpg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            filter: contrast(1.05) brightness(0.9);
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        .hero-content h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            color: #FFFFFF;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #DDDDDD;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .hero-highlight {
+            color: #FFFFFF;
+            border-bottom: 2px solid white;
+        }
+
+        /* 板块通用样式 */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+            border-left: 5px solid #FFFFFF;
+            padding-left: 1.2rem;
+            color: #FFFFFF;
+        }
+
+        /* 公司介绍卡片 */
+        .intro-grid {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #111111;
+            border-radius: 32px;
+            padding: 2.5rem;
+            border: 1px solid #333333;
+            transition: transform 0.2s;
+        }
+        .intro-text {
+            flex: 2;
+        }
+        .intro-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #CCCCCC;
+        }
+        .intro-text strong {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+        .intro-stats {
+            flex: 1;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .stat-card {
+            background: #1A1A1A;
+            padding: 1.2rem;
+            border-radius: 24px;
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid #2A2A2A;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        /* 作品成品板块 (含视频) */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .portfolio-item {
+            background: #111111;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            border: 1px solid #2A2A2A;
+            cursor: pointer;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            border-color: #FFFFFF;
+            box-shadow: 0 20px 35px -12px rgba(255,255,255,0.1);
+        }
+        .portfolio-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+        .portfolio-media img, .portfolio-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%); /* 轻微黑白统一感 */
+        }
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        .portfolio-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #FFFFFF;
+        }
+        .portfolio-info p {
+            color: #AAAAAA;
+        }
+
+        /* 服务板块卡片 */
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .service-card {
+            background: #111111;
+            border-radius: 28px;
+            padding: 2rem;
+            flex: 1;
+            min-width: 220px;
+            text-align: center;
+            transition: 0.2s;
+            border: 1px solid #2A2A2A;
+            cursor: pointer;
+        }
+        .service-card:hover {
+            border-color: #FFFFFF;
+            background: #1A1A1A;
+        }
+        .service-card i {
+            font-size: 2.8rem;
+            color: #FFFFFF;
+            margin-bottom: 1rem;
+        }
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+        }
+        .btn-contact {
+            display: inline-block;
+            margin-top: 1.5rem;
+            background: #FFFFFF;
+            color: #000000;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .btn-contact:hover {
+            background: #CCCCCC;
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(255,255,255,0.2);
+        }
+
+        /* 关注我们 - 社交链接黑白高对比 */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .social-card {
+            background: #111111;
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #FFFFFF;
+            font-weight: 600;
+            transition: 0.2s;
+            border: 1px solid #333;
+            backdrop-filter: blur(4px);
+        }
+        .social-card i {
+            font-size: 1.8rem;
+            transition: 0.2s;
+            color: #FFFFFF;
+        }
+        .social-card:hover {
+            background: #FFFFFF;
+            border-color: #FFFFFF;
+            transform: translateY(-3px);
+            color: #000000;
+        }
+        .social-card:hover i {
+            color: #000000;
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #888888;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .intro-grid {
+                flex-direction: column;
+            }
+            .btn-contact {
+                padding: 0.6rem 1.4rem;
+            }
+        }
+
+        /* 点击响应反馈 */
+        .clickable, .btn-contact, .social-card, .portfolio-item, .service-card, .nav-links a, .mobile-nav a {
+            cursor: pointer;
+            transition: all 0.15s linear;
+        }
+        .clickable:active, .btn-contact:active, .social-card:active, .portfolio-item:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Auto<span>Mus1c</span></div>
+        <!-- 桌面导航 -->
+        <div class="nav-links">
+            <a href="#home" class="nav-item">首页</a>
+            <a href="#intro" class="nav-item">公司</a>
+            <a href="#portfolio" class="nav-item">成品</a>
+            <a href="#services" class="nav-item">服务</a>
+            <a href="#follow" class="nav-item">关注</a>
+        </div>
+        <!-- 汉堡菜单按钮 -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- 移动端菜单浮层 -->
+<div class="mobile-nav" id="mobileNav">
+    <a href="#home">首页</a>
+    <a href="#intro">公司介绍</a>
+    <a href="#portfolio">作品成品</a>
+    <a href="#services">服务项目</a>
+    <a href="#follow">关注我们</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- 主页面头部长图区 -->
+<section id="home" class="hero">
+    <div class="hero-content">
+		
+        <h1>听见<span class="hero-highlight">未来</span> 节奏</h1>
+        <p>先锋音乐厂牌 · 为创作者赋能 从伴奏到母带，定义新声代浪潮</p>
+    </div>
+</section>
+
+<!-- 板块1：公司介绍 -->
+<section id="intro" class="section">
+    <h2 class="section-title">关于我们</h2>
+    <div class="intro-grid">
+        <div class="intro-text">
+            <p><strong>AUTO MUS1C</strong> 成立于2018年，坐落于音乐之都，是一家专注<strong class="hero-highlight" style="border-bottom:1px solid white;">高品质音乐制作 & 版权发行</strong>的创新型音乐公司。我们不仅为独立音乐人提供从伴奏编曲、音频优化到母带处理的全链路支持，还致力于打造前卫的听觉美学。</p>
+            <p>合作艺人超过200位，累计发行作品播放量突破5亿次，让每个灵感都能找到回响。<br>我们的使命：降低创作门槛，让好音乐触达世界每个角落。</p>
+        </div>
+        <div class="intro-stats">
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div>合作艺人</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5亿+</div>
+                <div>全球播放</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 板块2：公司成品展示（包含视频） -->
+<section id="portfolio" class="section">
+    <h2 class="section-title">代表作品</h2>
+    <div class="portfolio-grid">
+        <!-- 成品1 图片 -->
+        <div class="portfolio-item" onclick="alert('《霓虹脉搏》单曲试听 点击响应 - 正式版全网上线')">
+            <div class="portfolio-media">
+                <img src=" alt="专辑封面" loading="lazy">
+            </div>
+            <div class="portfolio-info">
+                <h3>------</h3>
+                <p>-----------------</p>
+            </div>
+        </div>
+        <!-- 成品2 视频（使用外部可播mp4样例）-->
+        <div class="portfolio-item">
+            <div class="portfolio-media">
+                <video controls poster="">
+                    <source src="" type="video/mp4">
+                    
+                </video>
+            </div>
+            <div class="portfolio-info">
+                <h3>---------------</h3>
+                <p>-------------------</p>
+            </div>
+        </div>
+        <!-- 成品3 图片 -->
+        <div class="portfolio-item" onclick="alert(' 年度专辑《深蓝叙事》好评如潮 点击预购通道开启')">
+            <div class="portfolio-media">
+                <img src="--------------------------" alt="">
+            </div>
+            <div class="portfolio-info">
+                <h3>------</h3>
+                <p>-------------------------</p>
+            </div>
+        </div>
+    </div>
+    <p style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:#AAAAAA;"> 点击任意作品卡片体验响应反馈 </p>
+</section>
+
+<!-- 板块3：服务介绍（为音乐制作者提供伴奏，音频优化）点击联系我们跳转服务页，且提供跳转服务区块 -->
+<section id="services" class="section">
+    <h2 class="section-title">专业服务 · 赋能创作</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <i class="fas fa-headphones"></i>
+            <h3>定制伴奏</h3>
+            <p>风格涵盖Hip-hop, Pop, R&B，原创编曲团队量身打造，版权清晰。</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-waveform"></i>
+            <h3>音频优化</h3>
+            <p>降噪/混音/母带处理，AI智能与人工精修结合，让音质脱胎换骨。</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>发行助推</h3>
+            <p>全球流媒体平台发行，一站式宣发策略，让你的作品被听见。</p>
+        </div>
+    </div>
+    <!-- 联系我们按钮：跳转至服务板块（本页内置），并强化点击响应 -->
+    <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="#services" class="btn-contact" id="contactServiceBtn"> 联系我们 · 获取服务报价</a>
+    </div>
+    <p style="text-align:center; margin-top:1rem; font-size:0.85rem; color:#AAAAAA;">点击“联系我们”跳转至服务板块，获取伴奏/音频优化支持</p>
+</section>
+
+<!-- 板块4：关注我们 社交媒体账号链接（黑白主题）-->
+<section id="follow" class="section">
+    <h2 class="section-title">关注我们</h2>
+    <div class="social-links">
+        <a href="https://instagram.com" target="_blank" class="social-card" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://twitter.com" target="_blank" class="social-card" rel="noopener noreferrer">
+            <i class="fab fa-twitter"></i> X (Twitter)
+        </a>
+        <a href="https://youtube.com" target="_blank" class="social-card" rel="noopener noreferrer">
+            <i class="fab fa-youtube"></i> YouTube Music
+        </a>
+        <a href="https://soundcloud.com" target="_blank" class="social-card" rel="noopener noreferrer">
+            <i class="fab fa-soundcloud"></i> SoundCloud
+        </a>
+        <a href="https://tiktok.com" target="_blank" class="social-card" rel="noopener noreferrer">
+            <i class="fab fa-tiktok"></i> TikTok
+        </a>
+    </div>
+    <p style="text-align:center; margin-top:2rem;">加入社群，第一时间获取音乐干货与新作资讯</p>
+</section>
+
+<footer>
+    <p> 2025 共振律动音乐公司 | 让创作自由呼吸</p>
+</footer>
+
+<script>
+    // 汉堡菜单逻辑 + 响应式交互
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const overlay = document.getElementById('overlay');
+
+    function openMenu() {
+        mobileNav.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (mobileNav.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+    overlay.addEventListener('click', closeMenu);
+    // 点击移动端任何链接后关闭菜单并平滑滚动
+    const mobileLinks = mobileNav.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            closeMenu();
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                e.preventDefault();
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    const offset = 80;
+                    const elementPosition = targetEl.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                } else {
+                    window.location.hash = targetId;
+                }
+            }
+        });
+    });
+
+    // 桌面导航平滑滚动 + active高亮效果
+    const navItems = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section, .hero');
+    function updateActiveNav() {
+        let current = '';
+        const scrollPos = window.scrollY + 120;
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        navItems.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href').substring(1);
+            if (href === current) {
+                link.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
+
+    // 给桌面导航链接添加平滑滚动
+    navItems.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 70;
+                    const elementPos = targetElement.getBoundingClientRect().top;
+                    const scrollOffset = elementPos + window.pageYOffset - offset;
+                    window.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+                    history.pushState(null, null, targetId);
+                }
+            }
+        });
+    });
+
+    // 联系我们按钮跳转服务板块，并增加反馈效果
+    const contactBtn = document.getElementById('contactServiceBtn');
+    if(contactBtn) {
+        contactBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const servicesSec = document.getElementById('services');
+            if (servicesSec) {
+                const offset = 70;
+                const pos = servicesSec.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: pos, behavior: 'smooth' });
+                // 额外反馈提示文字更改
+                contactBtn.textContent = '已跳转服务页';
+                setTimeout(() => {
+                    contactBtn.textContent = '联系我们 · 获取服务报价';
+                }, 1500);
+            }
+        });
+    }
+
+    // 服务卡片点击响应（展示详情弹窗）
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            if(e.target.tagName === 'A' || e.target.closest('.btn-contact')) return;
+            const title = card.querySelector('h3')?.innerText || '服务';
+            alert(` ${title} 详情可联系我们的制作团队，获取报价与案例。`);
+        });
+    });
+
+    // 附加对所有成品卡片已经有点击响应，社交卡片保留外链不强制弹窗
+    console.log("网站已加载，黑白高对比风格，所有功能交互就绪");
+</script>
+</body>
+</html>
