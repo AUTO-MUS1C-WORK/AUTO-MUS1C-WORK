@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AUTO MUS1C | 多语言·横向创作流 | 开场动画</title>
+    <title>AUTO MUS1C | 多语言·横向创作流 | 流畅开场动画</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -38,7 +38,7 @@
             --transition-apple: cubic-bezier(0.25, 0.1, 0.15, 1);
         }
 
-        /* ========= 开场动画层 (全屏图片 -> 缩小为头图) ========= */
+        /* ========= 开场动画层：图片与头图背景一致，缩小并融入头图区域 ========= */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -54,31 +54,62 @@
             transition: opacity 0.8s var(--transition-apple), visibility 0.8s;
             opacity: 1;
             visibility: visible;
+            pointer-events: none; /* 避免遮挡点击，但动画期间仍可看到 */
         }
         .intro-overlay.hide {
             opacity: 0;
             visibility: hidden;
         }
-        .intro-media {
+        /* 开场图片容器：占满全屏，相对定位用于后续计算头图位置 */
+        .intro-img-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            will-change: transform, width, height, top, left;
+        }
+        .intro-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: block;
+            transition: all 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+        }
+        /* 缩小动画：定位到头图背景的尺寸与位置 (与 hero-screen::before 区域匹配) */
+        .intro-img-container.zoom-to-hero {
+            position: fixed;
+            top: 70px;          /* 导航栏偏移后头图起始位置 */
+            left: 0;
+            width: 100%;
+            height: 90vh;        /* 与头图区域高度对应 */
             transform: scale(1);
-            will-change: transform, opacity;
+            border-radius: 0;
         }
-        /* 缩小动画：图片缩小并融入到头图背景中（缩小至0.6左右并淡出，同时上层隐藏）*/
-        .intro-media.zoom-out {
-            transform: scale(0.35);
-            opacity: 0;
+        .intro-img-container.zoom-to-hero .intro-img {
+            object-fit: cover;
+            opacity: 0.35;       /* 匹配头图背景透明度，实现视觉融合 */
+            filter: grayscale(0.2) brightness(0.7);
         }
-        /* 主内容初始透明，开场结束后再显示 */
+        /* 主内容初始透明，开场结束后显示 */
         .main-content {
             opacity: 0;
-            transition: opacity 0.6s var(--transition-apple);
+            transition: opacity 0.5s var(--transition-apple) 0.2s;
         }
         .main-content.visible-content {
             opacity: 1;
+        }
+        /* 文字浮现动画 (通过关键帧) */
+        .hero-content .fade-in-text {
+            animation: textRise 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+        @keyframes textRise {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(6px);}
+            100% { opacity: 1; transform: translateY(0); filter: blur(0);}
         }
 
         /* 每个板块独立为一屏，全屏高度 */
@@ -273,7 +304,7 @@
             margin: 0 auto;
         }
 
-        /* HERO 全屏头图 (背景被开场动画叠加后保留原样) */
+        /* HERO 全屏头图 (背景与开场图片视觉统一) */
         .hero-screen {
             background: radial-gradient(circle at 20% 40%, #0a0a0a 0%, #000000 100%);
             position: relative;
@@ -341,14 +372,17 @@
             .screen { padding: 4rem 1.5rem; }
             .section-title { font-size: 2.2rem; }
             .flow-horizontal-card { flex: 0 0 260px; }
+            .intro-img-container.zoom-to-hero { top: 60px; height: 85vh; }
         }
     </style>
 </head>
 <body>
 
-<!-- 开场动画层：全屏图片，持续一秒后缩小并隐藏 -->
+<!-- 开场动画层：图片与头图背景相同 -->
 <div class="intro-overlay" id="introOverlay">
-    <img class="intro-media" id="introMedia" src="TITLE PAGE.jpg" alt="Opening Visual">
+    <div class="intro-img-container" id="introImgContainer">
+        <img class="intro-img" id="introImg" src="TITLE PAGE.jpg" alt="Opening Visual">
+    </div>
 </div>
 
 <div class="main-content" id="mainContent">
@@ -390,9 +424,9 @@
     <!-- 独立全屏板块 1: HERO -->
     <section id="hero" class="screen hero-screen">
         <div class="container hero-content">
-            <h1 data-key="hero_title">下一代音乐创作集体</h1>
-            <p class="hero-desc" data-key="hero_desc">帮助每个人拥有属于自己的音乐项目。从灵感到发行，提供音乐制作、项目策划与艺人发展支持。</p>
-            <div class="btn-group">
+            <h1 data-key="hero_title" id="heroTitle">下一代音乐创作集体</h1>
+            <p class="hero-desc" data-key="hero_desc" id="heroDesc">帮助每个人拥有属于自己的音乐项目。<br>从灵感到发行，提供音乐制作、项目策划与艺人发展支持。</p>
+            <div class="btn-group" id="heroButtons">
                 <a href="#projects" class="btn-primary" data-key="btn_cases">查看案例</a>
                 <a href="#contact" class="btn-outline" data-key="btn_start">开始合作</a>
             </div>
@@ -491,33 +525,52 @@
 </div>
 
 <script>
-    // ========= 开场动画逻辑：持续一秒后缩小图片并隐藏层 =========
+    // ========= 开场动画：图片缩小到头图区域，然后文字浮现 =========
     const introOverlay = document.getElementById('introOverlay');
-    const introMedia = document.getElementById('introMedia');
+    const introContainer = document.getElementById('introImgContainer');
     const mainContent = document.getElementById('mainContent');
-    
-    // 禁止初始滚动
+    const heroTitle = document.getElementById('heroTitle');
+    const heroDesc = document.getElementById('heroDesc');
+    const heroButtons = document.getElementById('heroButtons');
+
+    // 初始禁用滚动
     document.body.style.overflow = 'hidden';
-    
-    // 1秒后触发缩小动画
+    // 确保头图文字初始透明
+    if (heroTitle) heroTitle.style.opacity = '0';
+    if (heroDesc) heroDesc.style.opacity = '0';
+    if (heroButtons) heroButtons.style.opacity = '0';
+
+    // 1秒后触发缩小动画，模拟图片缩小为网站头图背景
     setTimeout(() => {
-        if (introMedia) {
-            introMedia.classList.add('zoom-out');
+        if (introContainer) {
+            introContainer.classList.add('zoom-to-hero');
         }
-        // 动画持续0.6秒后完全隐藏开场层并显示主内容
+        // 动画持续0.9秒，结束后隐藏开场层并触发文字浮现
         setTimeout(() => {
             if (introOverlay) {
                 introOverlay.classList.add('hide');
-                // 移除遮挡并恢复滚动
                 setTimeout(() => {
                     introOverlay.style.display = 'none';
                     document.body.style.overflow = '';
                     mainContent.classList.add('visible-content');
+                    // 文字浮现动画
+                    if (heroTitle) {
+                        heroTitle.style.opacity = '1';
+                        heroTitle.classList.add('fade-in-text');
+                    }
+                    if (heroDesc) {
+                        heroDesc.style.opacity = '1';
+                        heroDesc.classList.add('fade-in-text');
+                    }
+                    if (heroButtons) {
+                        heroButtons.style.opacity = '1';
+                        heroButtons.classList.add('fade-in-text');
+                    }
                     window.dispatchEvent(new Event('scroll'));
                 }, 800);
             }
-        }, 600);
-    }, 1000);  // 停留1秒后开始缩小
+        }, 900); // 缩小动画时长0.9s
+    }, 1000);  // 全屏停留1秒后开始缩小
 
     // ---------- 多语言词库 (与之前保持一致) ----------
     const translations = {
@@ -535,14 +588,12 @@
             about_title: "AutoMus1c", about_text: "专注于音乐创作与艺人发展的制作团队。帮助创作者完成从歌曲制作到项目落地全过程。技术会不断变化，但音乐表达始终是核心。", core_title: "核心理念", core_text: "作品优先 · 长期成长 · 共同创作 · 持续进化",
             contact_title: "Start Your Project", contact_sub: "告诉我们你的想法。剩下的交给我们。", contact_ready: "准备好开始你的音乐项目？直接联系我们，从想法到发行一站式支持。", contact_btn: "开始合作 →", footer: "© 2025 AutoMus1c. All Rights Reserved. 多语言 · 沉浸体验"
         },
-        "zh-TW": { nav_home: "首頁", nav_create: "創作", nav_idea: "理念", nav_flow: "流程", nav_cases: "案例", nav_about: "關於", nav_contact: "聯絡",
+        "zh-TW": { /* ... 省略但保留完整代码结构，实际运行时包含所有语言 ... */ 
+            nav_home: "首頁", nav_create: "創作", nav_idea: "理念", nav_flow: "流程", nav_cases: "案例", nav_about: "關於", nav_contact: "聯絡",
             hero_title: "下一代音樂創作集體", hero_desc: "幫助每個人擁有屬於自己的音樂項目。<br>從靈感到發行，提供音樂製作、項目策劃與藝人發展支持。",
             btn_cases: "查看案例", btn_start: "開始合作",
             build_title: "我們能幫你完成什麼", build_sub: "從第一首歌到完整音樂項目，我們提供創作與製作支持。",
-            card1_title: "音樂製作", card1_desc: "專屬Beat · 編曲設計 · 整曲製作",
-            card2_title: "藝人發展", card2_desc: "單曲/EP/專輯 · 長期藝人企劃",
-            card3_title: "視覺包裝", card3_desc: "封面設計 · 視覺包裝 · 宣傳素材",
-            card4_title: "商業項目", card4_desc: "品牌音樂 · 廣告定製",
+            card1_title: "音樂製作", card1_desc: "專屬Beat · 編曲設計 · 整曲製作", card2_title: "藝人發展", card2_desc: "單曲/EP/專輯 · 長期藝人企劃", card3_title: "視覺包裝", card3_desc: "封面設計 · 視覺包裝 · 宣傳素材", card4_title: "商業項目", card4_desc: "品牌音樂 · 廣告定製",
             why_title: "在錄音前先聽見作品", why_text1: "完成編曲後，製作完整人聲Demo：演唱風格設計 · 情緒表達 · Flow編排 · 和聲細節。", why_text2: "<strong>最終交付的不只是伴奏。</strong> 接近發行版本的完整歌曲。從Demo到錄音，快速完成後續製作。", why_idea: "從靈感 → Demo → 錄音 → 發行",
             flow_title: "一首作品如何誕生", step1_title: "溝通需求", step1_desc: "確定風格與創作方向，定製化音樂藍圖", step2_title: "開始製作", step2_desc: "完成Beat與整體編排，構建歌曲骨架", step3_title: "完整Demo交付", step3_desc: "完成歌曲框架與人聲參考，提前感受成品", step4_title: "錄製人聲", step4_desc: "進入專業錄音室完成人聲錄製", step5_title: "混音母帶", step5_desc: "優化整體聽感與動態細節", step6_title: "完成發布", step6_desc: "獲得發行級成品，全網上線", drag_hint: "✧ 按住滑鼠左鍵拖曳，水平瀏覽創作流程 ✧",
             projects_title: "項目案例", projects_sub: "部分完成項目", proj1: "AI 饒舌專輯<br>10 首曲目 · 2025", proj2: "製作人合作<br>2025", proj3: "旋律陷阱單曲<br>即將發行", more_cases: "查看更多案例 →",
@@ -567,10 +618,7 @@
             hero_title: "次世代音楽集団", hero_desc: "誰もが自分自身の音楽プロジェクトを持てるように。<br>インスピレーションからリリースまで、音楽制作、プロジェクト企画、アーティスト育成をサポート。",
             btn_cases: "事例を見る", btn_start: "共同制作を始める",
             build_title: "私たちが実現すること", build_sub: "最初の1曲からフルプロジェクトまで、創作と制作をサポートします。",
-            card1_title: "音楽制作", card1_desc: "専用ビート · 編曲 · フル制作",
-            card2_title: "アーティスト育成", card2_desc: "シングル/EP/アルバム · 長期的な企画",
-            card3_title: "ビジュアルパッケージ", card3_desc: "ジャケットデザイン · ブランディング",
-            card4_title: "コマーシャル作品", card4_desc: "ブランドミュージック · カスタム制作",
+            card1_title: "音楽制作", card1_desc: "専用ビート · 編曲 · フル制作", card2_title: "アーティスト育成", card2_desc: "シングル/EP/アルバム · 長期的な企画", card3_title: "ビジュアルパッケージ", card3_desc: "ジャケットデザイン · ブランディング", card4_title: "コマーシャル作品", card4_desc: "ブランドミュージック · カスタム制作",
             why_title: "レコーディング前に作品を聴く", why_text1: "編曲後、ボーカルデモを制作：歌唱スタイル、感情表現、フローの最適化、ハーモニー詳細。", why_text2: "<strong>最終的に提供するのは伴奏だけではありません。</strong> リリースに近い完成形の楽曲を。デモからレコーディング、素早く仕上げます。", why_idea: "アイデア → デモ → レコーディング → リリース",
             flow_title: "楽曲が生まれるまで", step1_title: "ヒアリング", step1_desc: "方向性を決定", step2_title: "制作開始", step2_desc: "ビートとアレンジ", step3_title: "デモ納品", step3_desc: "歌詞と構成を確定", step4_title: "ボーカル録音", step4_desc: "スタジオ収録", step5_title: "ミックス/マスタリング", step5_desc: "音質を最適化", step6_title: "リリース", step6_desc: "配信可能なマスター", drag_hint: "✧ マウス左ボタンを押したままドラッグして水平スクロール ✧",
             projects_title: "プロジェクト事例", projects_sub: "一部実績", proj1: "AIラップアルバム<br>10曲 · 2025", proj2: "プロデューサーコラボ<br>2025", proj3: "メロディックトラップシングル<br近日公開", more_cases: "さらに見る →",
@@ -618,7 +666,7 @@
         scrollContainer.style.cursor = 'grab';
     }
 
-    // 导航滚动高亮
+    // 导航栏滚动高亮与交互
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => { if(window.scrollY > 20) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled'); });
     const hamburger = document.getElementById('hamburgerBtn');
