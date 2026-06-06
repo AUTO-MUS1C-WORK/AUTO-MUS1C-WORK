@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AUTO MUS1C WORK</title>
-    <!-- Google Fonts 支持多语言字体优化 -->
+    <title>AUTO MUS1C | 纯黑背景 · 白线钻石纹理 | 新增HERO标题区</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,7 +18,7 @@
             box-sizing: border-box;
         }
 
-        /* 国际化字体优化：默认中文字体 */
+        /* 国际化字体优化 */
         body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #000000;
@@ -32,10 +32,8 @@
             overflow-x: hidden;
             cursor: default;
         }
-        /* 针对日语和繁体中文优化字体 */
         body.lang-ja { font-family: 'Noto Sans JP', 'Inter', system-ui, sans-serif; }
         body.lang-zh-TW { font-family: 'Noto Sans TC', 'Inter', system-ui, sans-serif; }
-        /* 英文时使用 Century Gothic (优先本地，回退通用无衬线) */
         body.lang-en { font-family: 'Century Gothic', 'Apple Gothic', 'Gothic', 'Inter', system-ui, sans-serif; font-weight: 400; letter-spacing: 0.01em; }
 
         .cursor-glow {
@@ -61,7 +59,7 @@
             --transition-apple: cubic-bezier(0.25, 0.1, 0.15, 1);
         }
 
-        /* 开场动画 */
+        /* ========= 开场动画：缩放后消失，无头图 ========= */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -74,13 +72,16 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            transition: visibility 0.01s 1.9s;
             visibility: visible;
             pointer-events: none;
+            transition: visibility 0.01s 1.2s, opacity 0.8s ease;
         }
-        .intro-overlay.hide { visibility: hidden; }
+        .intro-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
         .intro-img-container {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -88,36 +89,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            transition: all 1s cubic-bezier(0.2, 0.9, 0.4, 1.05);
+            will-change: transform;
         }
         .intro-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            filter: contrast(1.2) brightness(0.9);
+            filter: contrast(1.1) brightness(0.95);
         }
-        .intro-img-container.zoom-to-hero {
-            position: fixed;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            height: 90vh;
+        .intro-img-container.zoom-out {
+            transform: scale(0.5);
+            opacity: 0;
         }
-        .intro-img-container.zoom-to-hero .intro-img {
-            opacity: 0.45;
-            filter: grayscale(0.1) brightness(0.8);
-        }
-        .main-content { opacity: 1; }
-        .hero-content .fade-in-text {
-            animation: textRise 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
-        }
-        @keyframes textRise {
-            0% { opacity: 0; transform: translateY(30px); filter: blur(6px);}
-            100% { opacity: 1; transform: translateY(0); filter: blur(0);}
+        .main-content {
+            opacity: 1;
+            position: relative;
+            z-index: 1;
         }
 
-        /* 板块全屏 + 背景黑底白线 (头图保留) */
+        /* 板块全屏 + 纯黑背景 + 增强White Diamond纹理 */
         .screen {
             min-height: 100vh;
             width: 100%;
@@ -128,33 +120,37 @@
             padding: 5rem 2rem;
             position: relative;
             scroll-snap-align: start;
-            background-size: cover, auto;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            will-change: transform;
+            background: #000000;
         }
-        #hero {
-            background: radial-gradient(circle at 20% 40%, #0a0a0a 0%, #000000 100%);
-            position: relative;
+        
+        /* 增强版白色钻石纹理 */
+        .screen::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/white-diamond.png');
+            background-size: 180px;
+            background-repeat: repeat;
+            opacity: 0.55;
+            pointer-events: none;
+            z-index: 0;
+            mix-blend-mode: overlay;
         }
-        #hero::before {
+        
+        .screen::before {
             content: "";
             position: absolute;
             inset: 0;
-            background-image: url('TITLE PAGE.jpg');
-            background-size: cover;
-            background-position: center 40%;
-            opacity: 0.35;
-            filter: grayscale(0.2) brightness(0.7);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 0;
+            pointer-events: none;
         }
-        #what-we-build { background-image: url('https://www.transparenttextures.com/patterns/white-diamond.png'), radial-gradient(circle at 20% 40%, #0a0a0a, #000000); background-size: 300px, auto; background-blend-mode: overlay; }
-        #why { background-image: url('https://www.transparenttextures.com/patterns/cross-scratches.png'), linear-gradient(145deg, #050505, #000); background-size: 180px, auto; background-blend-mode: soft-light; }
-        #workflow { background-image: url('https://www.transparenttextures.com/patterns/axiom-pattern.png'), radial-gradient(ellipse at 70% 30%, #0c0c0c, #000); background-size: 280px, auto; background-blend-mode: overlay; }
-        #projects { background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'), linear-gradient(45deg, #080808, #000); background-size: 200px, auto; background-blend-mode: luminosity; }
-        #about { background-image: url('https://www.transparenttextures.com/patterns/brushed-alum.png'), repeating-linear-gradient(45deg, #111 0px, #111 2px, #000 2px, #000 8px); background-blend-mode: overlay; }
-        #contact { background-image: url('https://www.transparenttextures.com/patterns/stardust.png'), radial-gradient(circle at 80% 20%, #0a0a0a, #000000); background-size: 220px, auto; background-blend-mode: screen; }
+        
+        .screen > * { position: relative; z-index: 2; }
+        html { scroll-snap-type: y mandatory; }
 
         /* 动态粒子画布 */
         #bg-canvas {
@@ -165,20 +161,10 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.28;
+            opacity: 0.35;
         }
-        .screen::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .screen > * { position: relative; z-index: 2; }
-        html { scroll-snap-type: y mandatory; }
 
-        /* 导航栏 (国际化语言切换器保留) */
+        /* 导航栏 */
         .navbar {
             position: fixed;
             top: 0;
@@ -219,17 +205,67 @@
         .overlay.active { display: block; }
 
         .container { max-width: 1280px; width: 100%; margin: 0 auto; }
-        .hero-content { text-align: left; }
-        .hero-content h1 { font-size: 5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 1.2rem; background: linear-gradient(135deg, #FFF 20%, #CCCCCC 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero-desc { font-size: 1.2rem; font-weight: 400; color: #E0E0E0; max-width: 600px; margin-bottom: 1rem; }
-        .btn-group { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.5rem; }
-        .btn-primary, .btn-outline { padding: 0.8rem 2rem; border-radius: 40px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; text-decoration: none; display: inline-block; backdrop-filter: blur(4px); }
-        .btn-primary { background: #FFFFFF; color: #000000; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        .btn-primary:hover { background: #DDDDDD; transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.6); }
-        .btn-outline { border: 1px solid #FFFFFF; color: #FFFFFF; background: transparent; }
-        .btn-outline:hover { background: rgba(255,255,255,0.15); transform: scale(1.05); letter-spacing: 1px; }
-
-        .section-title { font-size: 2.8rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 2rem; border-left: 5px solid #FFFFFF; padding-left: 1.2rem; }
+        
+        /* ========= 新增 HERO 标题区 (01 HERO) ========= */
+        .hero-section {
+            text-align: left;
+            width: 100%;
+        }
+        .hero-badge {
+            font-size: 1rem;
+            letter-spacing: 4px;
+            font-weight: 500;
+            color: #CCCCCC;
+            margin-bottom: 1rem;
+            border-left: 3px solid #FFFFFF;
+            padding-left: 1rem;
+        }
+        .hero-title-main {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #BBBBBB 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #E0E0E0;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            color: #CCCCCC;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0 2rem;
+            font-size: 0.9rem;
+            color: #AAAAAA;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            border-left: 5px solid #FFFFFF;
+            padding-left: 1.2rem;
+        }
         .section-sub { color: #DDDDDD; margin-bottom: 2rem; font-size: 1.1rem; }
         .grid-2, .grid-3, .grid-4 { display: grid; gap: 2rem; }
         .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
@@ -241,6 +277,7 @@
         .card:hover i { transform: scale(1.1); }
         .card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; }
 
+        /* 横向滚动板块 */
         .horizontal-scroll-section { width: 100%; overflow-x: auto; overflow-y: hidden; cursor: grab; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
         .horizontal-scroll-section:active { cursor: grabbing; }
         .horizontal-scroll-section::-webkit-scrollbar { display: none; }
@@ -257,13 +294,75 @@
         .social-card:hover { background: white; color: black; transform: translateY(-3px) scale(1.03); border-color: white; }
         footer { text-align: center; padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); font-size: 0.8rem; }
 
+        /* 按钮样式优化 */
+        .btn-primary, .btn-outline {
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-decoration: none;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary {
+            background: transparent;
+            color: #FFFFFF;
+            border: 1.5px solid rgba(255,255,255,0.7);
+            box-shadow: 0 0 8px rgba(255,255,255,0.2);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: #FFFFFF;
+            transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: -1;
+            border-radius: 60px;
+        }
+        .btn-primary:hover {
+            color: #000000;
+            border-color: #FFFFFF;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+        .btn-primary:hover::before {
+            width: 100%;
+        }
+        .btn-outline {
+            background: #FFFFFF;
+            color: #000000;
+            border: 1px solid #FFFFFF;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .btn-outline:hover {
+            background: transparent;
+            color: #FFFFFF;
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+        }
+        .btn-primary:active, .btn-outline:active {
+            transform: scale(0.97);
+        }
+
         @media (max-width: 800px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
-            .hero-content h1 { font-size: 3rem; }
-            .screen { padding: 4rem 1.5rem; background-attachment: scroll; }
+            .screen { padding: 4rem 1.5rem; }
             .section-title { font-size: 2.2rem; }
             .flow-horizontal-card { flex: 0 0 260px; }
+            .screen::after { background-size: 120px; opacity: 0.5; }
+            .btn-primary, .btn-outline { padding: 0.7rem 1.6rem; font-size: 0.85rem; }
+            .hero-title-main { font-size: 3rem; }
         }
     </style>
 </head>
@@ -271,18 +370,28 @@
 <div class="cursor-glow" id="cursorGlow"></div>
 <canvas id="bg-canvas"></canvas>
 
+<!-- 开场动画图片（缩放后消失） -->
 <div class="intro-overlay" id="introOverlay">
     <div class="intro-img-container" id="introImgContainer">
-        <img class="intro-img" id="introImg" src="TITLE PAGE.jpg" alt="Opening">
+        <img class="intro-img" id="introImg" src="TITLE PAGE,jpg" alt="Opening Image">
     </div>
 </div>
 
 <div class="main-content" id="mainContent">
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="logo-area"><img class="nav-logo-img" src="LOGO.jpg" alt="logo"><div class="logo">AUTO<span>MUS1C</span></div></div>
+            <div class="logo-area">
+                <img class="nav-logo-img" src="LOGO.jpg" alt="logo">
+                <div class="logo">AUTO<span>MUS1C</span></div>
+            </div>
             <div class="nav-links">
-                <a href="#hero" data-key="nav_home">首页</a><a href="#what-we-build" data-key="nav_create">创作</a><a href="#why" data-key="nav_idea">理念</a><a href="#workflow" data-key="nav_flow">流程</a><a href="#projects" data-key="nav_cases">案例</a><a href="#about" data-key="nav_about">关于</a><a href="#contact" data-key="nav_contact">联络</a>
+                <a href="#hero" data-key="nav_home">首页</a>
+                <a href="#what-we-build" data-key="nav_create">创作</a>
+                <a href="#why" data-key="nav_idea">理念</a>
+                <a href="#workflow" data-key="nav_flow">流程</a>
+                <a href="#projects" data-key="nav_cases">案例</a>
+                <a href="#about" data-key="nav_about">关于</a>
+                <a href="#contact" data-key="nav_contact">联络</a>
                 <div class="lang-selector"><div class="lang-current"><span id="currentLangLabel">中文</span> <i class="fas fa-chevron-down"></i></div><div class="lang-dropdown"><div class="lang-option" data-lang="zh">简体中文</div><div class="lang-option" data-lang="zh-TW">繁體中文</div><div class="lang-option" data-lang="en">English</div><div class="lang-option" data-lang="ja">日本語</div></div></div>
             </div>
             <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button>
@@ -291,27 +400,84 @@
     <div class="mobile-nav" id="mobileNav"><a href="#hero">首页</a><a href="#what-we-build">创作</a><a href="#why">理念</a><a href="#workflow">流程</a><a href="#projects">案例</a><a href="#about">关于</a><a href="#contact">联络</a></div>
     <div class="overlay" id="overlay"></div>
 
-    <section id="hero" class="screen"><div class="container hero-content"><h1 id="heroTitle" data-key="hero_title">下一代音乐创作集体</h1><p id="heroDesc" class="hero-desc" data-key="hero_desc">帮助每个人拥有属于自己的音乐项目。<br>从灵感到发行，提供音乐制作、项目策划与艺人发展支持。</p><div class="btn-group" id="heroButtons"><a href="#projects" class="btn-primary" data-key="btn_cases">查看案例</a><a href="#contact" class="btn-outline" data-key="btn_start">开始合作</a></div></div></section>
+    <!-- 新增的 01 HERO 板块，作为第一个全屏区域 -->
+    <section id="hero" class="screen">
+        <div class="container hero-section">
+            
+            <h1 class="hero-title-main" data-key="hero_title_main">AUTO MUS1C</h1>
+            <h2 class="hero-subtitle" data-key="hero_subtitle">下一代音乐创作集体</h2>
+            <p class="hero-description" data-key="hero_description">帮助每个人拥有属于自己的音乐项目 从灵感到发行，我们提供音乐制作、项目策划与艺人发展支持。</p>
+            <div class="hero-tags" data-key="hero_tags">
+                Music Production · Vocal Production · Mixing & Mastering · Artist Development
+            </div>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn-primary" data-key="btn_cases">查看案例</a>
+                <a href="#contact" class="btn-outline" data-key="btn_start">开始合作</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 内容板块2: 我们能帮你完成什么 -->
     <section id="what-we-build" class="screen"><div class="container"><h2 class="section-title" data-key="build_title">我们能帮你完成什么</h2><p class="section-sub" data-key="build_sub">从第一首歌到完整音乐项目，我们提供创作与制作支持。</p><div class="grid-4"><div class="card"><i class="fas fa-headphones"></i><h3 data-key="card1_title">Music Production</h3><p data-key="card1_desc">专属Beat · 编曲设计 · 整曲制作</p></div><div class="card"><i class="fas fa-user-astronaut"></i><h3 data-key="card2_title">Artist Development</h3><p data-key="card2_desc">单曲/EP/专辑 · 长期艺人企划</p></div><div class="card"><i class="fas fa-palette"></i><h3 data-key="card3_title">Visual Package</h3><p data-key="card3_desc">封面设计 · 视觉包装 · 宣传素材</p></div><div class="card"><i class="fas fa-chart-line"></i><h3 data-key="card4_title">Commercial Projects</h3><p data-key="card4_desc">品牌音乐 · 广告定制</p></div></div></div></section>
+    
     <section id="why" class="screen"><div class="container"><h2 class="section-title" data-key="why_title">Hear It Before You Record It</h2><div class="card" style="max-width: 900px; margin: 0 auto;"><p style="font-size:1.05rem;" data-key="why_text1">完成编曲后，制作完整人声Demo：演唱风格设计 · 情绪表达 · Flow编排 · 和声细节。</p><p style="margin-top:1rem;" data-key="why_text2"><strong>最终交付的不只是伴奏。</strong> 接近发行版本的完整歌曲。</p><div style="margin-top:1.5rem; border-left: 3px solid white; padding-left:1rem;" data-key="why_idea">From Idea → Demo → Recording → Release</div></div></div></section>
+    
     <section id="workflow" class="screen"><div class="container" style="width: 100%;"><h2 class="section-title" data-key="flow_title">一首作品如何诞生</h2><div class="horizontal-scroll-section" id="horizontalScroll"><div class="horizontal-track"><div class="flow-horizontal-card"><div class="step-number-large">01</div><h3 data-key="step1_title">沟通需求</h3><p data-key="step1_desc">确定风格与创作方向</p></div><div class="flow-horizontal-card"><div class="step-number-large">02</div><h3 data-key="step2_title">开始制作</h3><p data-key="step2_desc">完成Beat与整体编排</p></div><div class="flow-horizontal-card"><div class="step-number-large">03</div><h3 data-key="step3_title">完整Demo交付</h3><p data-key="step3_desc">歌曲框架与人声参考</p></div><div class="flow-horizontal-card"><div class="step-number-large">04</div><h3 data-key="step4_title">录制人声</h3><p data-key="step4_desc">专业录音室录制</p></div><div class="flow-horizontal-card"><div class="step-number-large">05</div><h3 data-key="step5_title">混音母带</h3><p data-key="step5_desc">优化听感与动态</p></div><div class="flow-horizontal-card"><div class="step-number-large">06</div><h3 data-key="step6_title">完成发布</h3><p data-key="step6_desc">发行级成品</p></div></div></div><div class="drag-hint" data-key="drag_hint">✧ 按住鼠标左键拖动，水平浏览创作流程 ✧</div></div></section>
-    <section id="projects" class="screen"><div class="container"><h2 class="section-title" data-key="projects_title">项目案例</h2><p class="section-sub" data-key="projects_sub">部分完成项目</p><div class="grid-3"><div class="project-item"><h3>PROJECT 001</h3><p data-key="proj1">AI RAP ALBUM<br>10 Tracks · 2025</p></div><div class="project-item"><h3>PROJECT 002</h3><p data-key="proj2">Producer Collaboration<br>2025</p></div><div class="project-item"><h3>PROJECT 003</h3><p data-key="proj3">Melodic Trap Single<br>Coming Soon</p></div></div><div style="text-align: center; margin-top: 2.5rem;"><a href="#contact" class="btn-outline" style="border-color:#fff;" data-key="more_cases">查看更多案例 →</a></div></div></section>
+    
+    <!-- 项目案例板块 -->
+    <section id="projects" class="screen">
+        <div class="container">
+            <h2 class="section-title" data-key="projects_title">项目案例</h2>
+            <p class="section-sub" data-key="projects_sub">部分完成项目</p>
+            <div class="grid-3">
+                <div class="project-item"><h3>PROJECT 001</h3><p data-key="proj1">AI RAP ALBUM<br>10 Tracks · 2025</p></div>
+                <div class="project-item"><h3>PROJECT 002</h3><p data-key="proj2">Producer Collaboration<br>2025</p></div>
+                <div class="project-item"><h3>PROJECT 003</h3><p data-key="proj3">Melodic Trap Single<br>Coming Soon</p></div>
+            </div>
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <a href="OUR WORKS.html" class="btn-outline" data-key="more_cases">查看更多案例 →</a>
+            </div>
+        </div>
+    </section>
+    
     <section id="about" class="screen"><div class="container"><h2 class="section-title" data-key="about_title">AutoMus1c</h2><div class="grid-2" style="max-width: 1000px; margin: 0 auto;"><div class="card"><p data-key="about_text">专注于音乐创作与艺人发展的制作团队。帮助创作者完成从歌曲制作到项目落地全过程。技术会不断变化，但音乐表达始终是核心。</p></div><div class="card"><h3 data-key="core_title">核心理念</h3><p data-key="core_text">作品优先 · 长期成长 · 共同创作 · 持续进化</p></div></div></div></section>
-    <section id="contact" class="screen"><div class="container"><h2 class="section-title" data-key="contact_title">Start Your Project</h2><p class="section-sub" data-key="contact_sub">告诉我们你的想法。剩下的交给我们。</p><div class="social-links"><a href="mailto:hello@automus1c.com" class="social-card"><i class="fas fa-envelope"></i> hello@automus1c.com</a><a href="#" class="social-card"><i class="fab fa-instagram"></i> @automus1c.studio</a><a href="#" class="social-card"><i class="fab fa-discord"></i> AutoMus1c Studio</a></div><div style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); border-radius: 32px; text-align: center; max-width: 700px; margin: 2rem auto 0;"><p data-key="contact_ready">准备好开始你的音乐项目？直接联系我们，一站式支持。</p><a href="mailto:hello@automus1c.com" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;" data-key="contact_btn">开始合作 →</a></div></div></section>
-    <footer><p data-key="footer">© 2025 AutoMus1c. 国际视野 · 多语言动效 · 英文字体 Century Gothic</p></footer>
+    
+    <section id="contact" class="screen">
+        <div class="container">
+            <h2 class="section-title" data-key="contact_title">Start Your Project</h2>
+            <p class="section-sub" data-key="contact_sub">告诉我们你的想法。剩下的交给我们。</p>
+            <div class="social-links">
+                <a href="mailto:hello@automus1c.com" class="social-card"><i class="fas fa-envelope"></i> hello@automus1c.com</a>
+                <a href="#" class="social-card"><i class="fab fa-instagram"></i> @automus1c.studio</a>
+                <a href="#" class="social-card"><i class="fab fa-discord"></i> AutoMus1c Studio</a>
+            </div>
+            <div style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); border-radius: 32px; text-align: center; max-width: 700px; margin: 2rem auto 0;">
+                <p data-key="contact_ready">准备好开始你的音乐项目？直接联系我们，一站式支持。</p>
+                <a href="mailto:hello@automus1c.com" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;" data-key="contact_btn">开始合作 →</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer><p data-key="footer">© 2025 AutoMus1c. 纯黑背景 · 白线钻石纹理 · 新增01 HERO板块</p></footer>
 </div>
 
 <script>
-    // 开场动画
-    const introOverlay = document.getElementById('introOverlay'), introContainer = document.getElementById('introImgContainer');
-    const heroTitle = document.getElementById('heroTitle'), heroDesc = document.getElementById('heroDesc'), heroButtons = document.getElementById('heroButtons');
-    if(heroTitle) heroTitle.style.opacity = '0'; if(heroDesc) heroDesc.style.opacity = '0'; if(heroButtons) heroButtons.style.opacity = '0';
-    setTimeout(() => { if(introContainer) introContainer.classList.add('zoom-to-hero'); setTimeout(() => { if(introOverlay) introOverlay.classList.add('hide'); if(heroTitle) { heroTitle.style.opacity='1'; heroTitle.classList.add('fade-in-text'); } if(heroDesc) { heroDesc.style.opacity='1'; heroDesc.classList.add('fade-in-text'); } if(heroButtons) { heroButtons.style.opacity='1'; heroButtons.classList.add('fade-in-text'); } window.dispatchEvent(new Event('scroll')); }, 900); }, 1000);
-
+    // ========= 开场动画：缩放后消失 =========
+    const introOverlay = document.getElementById('introOverlay');
+    const introContainer = document.getElementById('introImgContainer');
+    
+    setTimeout(() => {
+        if(introContainer) introContainer.classList.add('zoom-out');
+        setTimeout(() => {
+            if(introOverlay) introOverlay.classList.add('hide');
+            window.dispatchEvent(new Event('scroll'));
+        }, 1000);
+    }, 1000);
+    
     // 鼠标跟随光晕
     const glow = document.getElementById('cursorGlow');
     document.addEventListener('mousemove', (e) => { gsap.to(glow, { duration: 0.2, x: e.clientX, y: e.clientY, ease: "power2.out" }); });
-
+    
     // 动态粒子画布
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
@@ -320,22 +486,22 @@
     function resizeCanvas() { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    for(let i=0;i<60;i++) { particles.push({ x: Math.random()*width, y: Math.random()*height, vx: (Math.random()-0.5)*0.6, vy: (Math.random()-0.5)*0.4, size: Math.random()*2+1 }); }
-    function drawLines() { ctx.clearRect(0,0,width,height); ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 0.8; for(let i=0;i<particles.length;i++) { let p=particles[i]; p.x+=p.vx; p.y+=p.vy; if(p.x<0) p.x=width; if(p.x>width) p.x=0; if(p.y<0) p.y=height; if(p.y>height) p.y=0; for(let j=i+1;j<particles.length;j++) { let q=particles[j]; let dx=p.x-q.x, dy=p.y-q.y, dist=Math.hypot(dx,dy); if(dist<120) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); } } } requestAnimationFrame(drawLines); }
+    for(let i=0;i<70;i++) { particles.push({ x: Math.random()*width, y: Math.random()*height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.4, size: Math.random()*2+1 }); }
+    function drawLines() { ctx.clearRect(0,0,width,height); ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 0.8; for(let i=0;i<particles.length;i++) { let p=particles[i]; p.x+=p.vx; p.y+=p.vy; if(p.x<0) p.x=width; if(p.x>width) p.x=0; if(p.y<0) p.y=height; if(p.y>height) p.y=0; for(let j=i+1;j<particles.length;j++) { let q=particles[j]; let dx=p.x-q.x, dy=p.y-q.y, dist=Math.hypot(dx,dy); if(dist<120) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); } } } requestAnimationFrame(drawLines); }
     drawLines();
-
+    
     gsap.registerPlugin(ScrollTrigger);
     gsap.utils.toArray('.screen').forEach((section, i) => { gsap.from(section, { opacity: 0, y: 60, duration: 1, scrollTrigger: { trigger: section, start: "top 85%", toggleActions: "play none none reverse" } }); });
     gsap.utils.toArray('.card, .flow-horizontal-card, .project-item').forEach(el => { gsap.from(el, { scale: 0.95, opacity: 0, y: 40, duration: 0.6, scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } }); });
     
     const scrollContainer = document.getElementById('horizontalScroll');
     if(scrollContainer) { let isDown=false, startX, scrollLeft; scrollContainer.addEventListener('mousedown', (e) => { if(e.button===0) { isDown=true; startX=e.pageX-scrollContainer.offsetLeft; scrollLeft=scrollContainer.scrollLeft; scrollContainer.style.cursor='grabbing'; document.body.style.userSelect='none'; } }); window.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x=e.pageX-scrollContainer.offsetLeft; const walk=(x-startX)*1.2; scrollContainer.scrollLeft=scrollLeft-walk; }); window.addEventListener('mouseup', () => { if(isDown) { isDown=false; scrollContainer.style.cursor='grab'; document.body.style.userSelect=''; } }); scrollContainer.style.cursor='grab'; }
-
-    // 国际化翻译库 + 字体类名切换（英文时应用 Century Gothic）
-    const translations={zh:{nav_home:"首页",nav_create:"创作",nav_idea:"理念",nav_flow:"流程",nav_cases:"案例",nav_about:"关于",nav_contact:"联络",hero_title:"下一代音乐创作集体",hero_desc:"帮助每个人拥有属于自己的音乐项目。从灵感到发行，提供音乐制作、项目策划与艺人发展支持。",btn_cases:"查看案例",btn_start:"开始合作",build_title:"我们能帮你完成什么",build_sub:"从第一首歌到完整音乐项目，我们提供创作与制作支持。",card1_title:"Music Production",card1_desc:"专属Beat · 编曲设计 · 整曲制作",card2_title:"Artist Development",card2_desc:"单曲/EP/专辑 · 长期艺人企划",card3_title:"Visual Package",card3_desc:"封面设计 · 视觉包装 · 宣传素材",card4_title:"Commercial Projects",card4_desc:"品牌音乐 · 广告定制",why_title:"Hear It Before You Record It",why_text1:"完成编曲后，制作完整人声Demo：演唱风格设计 · 情绪表达 · Flow编排 · 和声细节。",why_text2:"<strong>最终交付的不只是伴奏。</strong> 接近发行版本的完整歌曲。",why_idea:"From Idea → Demo → Recording → Release",flow_title:"一首作品如何诞生",step1_title:"沟通需求",step1_desc:"确定风格与创作方向",step2_title:"开始制作",step2_desc:"完成Beat与整体编排",step3_title:"完整Demo交付",step3_desc:"歌曲框架与人声参考",step4_title:"录制人声",step4_desc:"专业录音室录制",step5_title:"混音母带",step5_desc:"优化听感与动态",step6_title:"完成发布",step6_desc:"发行级成品",drag_hint:"✧ 按住鼠标左键拖动，水平浏览创作流程 ✧",projects_title:"项目案例",projects_sub:"部分完成项目",proj1:"AI RAP ALBUM<br>10 Tracks · 2025",proj2:"Producer Collaboration<br>2025",proj3:"Melodic Trap Single<br>Coming Soon",more_cases:"查看更多案例 →",about_title:"AutoMus1c",about_text:"专注于音乐创作与艺人发展的制作团队。帮助创作者完成从歌曲制作到项目落地全过程。技术会不断变化，但音乐表达始终是核心。",core_title:"核心理念",core_text:"作品优先 · 长期成长 · 共同创作 · 持续进化",contact_title:"Start Your Project",contact_sub:"告诉我们你的想法。剩下的交给我们。",contact_ready:"准备好开始你的音乐项目？直接联系我们，一站式支持。",contact_btn:"开始合作 →",footer:"© 2025 AutoMus1c. 国际视野 · 多语言动效 · 英文字体 Century Gothic"}};
-    translations["zh-TW"]={...translations.zh, nav_home:"首頁",nav_create:"創作",hero_title:"下一代音樂創作集體",hero_desc:"幫助每個人擁有屬於自己的音樂項目。從靈感到發行，提供音樂製作、項目策劃與藝人發展支持。",btn_cases:"查看案例",btn_start:"開始合作",build_title:"我們能幫你完成什麼",build_sub:"從第一首歌到完整音樂項目，我們提供創作與製作支持。",card1_title:"音樂製作",card1_desc:"專屬Beat · 編曲設計 · 整曲製作",card2_title:"藝人發展",card2_desc:"單曲/EP/專輯 · 長期藝人企劃",card3_title:"視覺包裝",card3_desc:"封面設計 · 視覺包裝 · 宣傳素材",card4_title:"商業項目",card4_desc:"品牌音樂 · 廣告定製",why_title:"在錄音前先聽見作品",why_text1:"完成編曲後，製作完整人聲Demo：演唱風格設計 · 情緒表達 · Flow編排 · 和聲細節。",why_text2:"<strong>最終交付的不只是伴奏。</strong> 接近發行版本的完整歌曲。",why_idea:"從靈感 → Demo → 錄音 → 發行",flow_title:"一首作品如何誕生",drag_hint:"✧ 按住滑鼠左鍵拖曳，水平瀏覽創作流程 ✧",projects_title:"項目案例",projects_sub:"部分完成項目",proj1:"AI 饒舌專輯<br>10 首曲目 · 2025",proj2:"製作人合作<br>2025",proj3:"旋律陷阱單曲<br>即將發行",more_cases:"查看更多案例 →",about_title:"關於 AutoMus1c",about_text:"專注於音樂創作與藝人發展的製作團隊。幫助創作者完成從歌曲製作到項目落地全過程。技術會不斷變化，但音樂表達始終是核心。",core_title:"核心理念",core_text:"作品優先 · 長期成長 · 共同創作 · 持續進化",contact_title:"開始您的項目",contact_sub:"告訴我們你的想法。剩下的交給我們。",contact_ready:"準備好開始你的音樂項目？直接聯繫我們，一站式支持。",contact_btn:"開始合作 →",footer:"© 2025 AutoMus1c. 國際視野 · 多語言動效 · 英文字體 Century Gothic"};
-    translations.en={nav_home:"Home",nav_create:"Create",nav_idea:"Idea",nav_flow:"Workflow",nav_cases:"Cases",nav_about:"About",nav_contact:"Contact",hero_title:"Next-Gen Music Collective",hero_desc:"Helping everyone own their music project.From inspiration to release: music production, project planning & artist development.",btn_cases:"View Cases",btn_start:"Start Collab",build_title:"What We Help You Build",build_sub:"From first song to full music project, we provide creative & production support.",card1_title:"Music Production",card1_desc:"Custom Beats · Arrangement · Full Production",card2_title:"Artist Development",card2_desc:"Singles/EP/Album · Long-term planning",card3_title:"Visual Package",card3_desc:"Cover Art · Visual Identity · Promo Assets",card4_title:"Commercial Projects",card4_desc:"Brand Music · Custom Audio",why_title:"Hear It Before You Record It",why_text1:"After arranging, we produce full vocal demo: vocal style design, emotion delivery, flow optimization, harmonies.",why_text2:"<strong>What we deliver is more than a beat.</strong> A near-final song.",why_idea:"From Idea → Demo → Recording → Release",flow_title:"How a Song Comes to Life",step1_title:"Consult",step1_desc:"Define style & creative direction",step2_title:"Start Production",step2_desc:"Beat & overall arrangement",step3_title:"Full Demo",step3_desc:"Song structure & vocal reference",step4_title:"Record Vocals",step4_desc:"Studio recording session",step5_title:"Mix & Master",step5_desc:"Polish dynamics & sound",step6_title:"Release",step6_desc:"Distribution-ready master",drag_hint:"✧ Hold left mouse button and drag to scroll workflow ✧",projects_title:"Projects",projects_sub:"Selected works",proj1:"AI RAP ALBUM<br>10 Tracks · 2025",proj2:"Producer Collaboration<br>2025",proj3:"Melodic Trap Single<br>Coming Soon",more_cases:"More Cases →",about_title:"AutoMus1c",about_text:"A production team focused on music creation and artist development. Helping creators from songwriting to project completion. Technology changes, but musical expression stays core.",core_title:"Core Philosophy",core_text:"Quality First · Long-term Growth · Co-creation · Constant Evolution",contact_title:"Start Your Project",contact_sub:"Tell us your idea. Leave the rest to us.",contact_ready:"Ready to start your music project? Contact us for one-stop support from idea to release.",contact_btn:"Start Collaborating →",footer:"© 2025 AutoMus1c. Global Vision · Multilingual Motion · English Font: Century Gothic"};
-    translations.ja={nav_home:"ホーム",nav_create:"制作",nav_idea:"理念",nav_flow:"プロセス",nav_cases:"事例",nav_about:"会社概要",nav_contact:"お問い合わせ",hero_title:"次世代音楽集団",hero_desc:"誰もが自分自身の音楽プロジェクトを持てるように。インスピレーションからリリースまで、音楽制作、プロジェクト企画、アーティスト育成をサポート。",btn_cases:"事例を見る",btn_start:"共同制作を始める",build_title:"私たちが実現すること",build_sub:"最初の1曲からフルプロジェクトまで、創作と制作をサポートします。",card1_title:"音楽制作",card1_desc:"専用ビート · 編曲 · フル制作",card2_title:"アーティスト育成",card2_desc:"シングル/EP/アルバム · 長期的な企画",card3_title:"ビジュアルパッケージ",card3_desc:"ジャケットデザイン · ブランディング",card4_title:"コマーシャル作品",card4_desc:"ブランドミュージック · カスタム制作",why_title:"レコーディング前に作品を聴く",why_text1:"編曲後、ボーカルデモを制作：歌唱スタイル、感情表現、フローの最適化、ハーモニー詳細。",why_text2:"<strong>最終的に提供するのは伴奏だけではありません。</strong> リリースに近い完成形の楽曲。",why_idea:"アイデア → デモ → レコーディング → リリース",flow_title:"楽曲が生まれるまで",step1_title:"ヒアリング",step1_desc:"方向性を決定",step2_title:"制作開始",step2_desc:"ビートとアレンジ",step3_title:"デモ納品",step3_desc:"歌詞と構成を確定",step4_title:"ボーカル録音",step4_desc:"スタジオ収録",step5_title:"ミックス/マスタリング",step5_desc:"音質を最適化",step6_title:"リリース",step6_desc:"配信可能なマスター",drag_hint:"✧ マウス左ボタンを押したままドラッグして水平スクロール ✧",projects_title:"プロジェクト事例",projects_sub:"一部実績",proj1:"AIラップアルバム<br>10曲 · 2025",proj2:"プロデューサーコラボ<br>2025",proj3:"メロディックトラップシングル<br近日公開",more_cases:"さらに見る →",about_title:"AutoMus1cとは",about_text:"音楽制作とアーティスト育成に特化したチーム。楽曲制作からプロジェクト完了までクリエイターを支援します。テクノロジーは変化しても、音楽表現は常に中心です。",core_title:"核心理念",core_text:"作品優先 · 長期的成長 · 共創 · 継続的進化",contact_title:"プロジェクト開始",contact_sub:"あなたのアイデアを教えてください。あとは私たちにお任せ。",contact_ready:"音楽プロジェクトを始めますか？アイデアからリリースまでワンストップでサポートします。",contact_btn:"共同制作を始める →",footer:"© 2025 AutoMus1c. グローバルビジョン · 多言語モーション · 英語フォント Century Gothic"};
+    
+    // 国际化翻译库 (包含新增的HERO文本)
+    const translations={zh:{nav_home:"首页",nav_create:"创作",nav_idea:"理念",nav_flow:"流程",nav_cases:"案例",nav_about:"关于",nav_contact:"联络",hero_badge:"01 HERO",hero_title_main:"AUTO MUS1C",hero_subtitle:"下一代音乐创作集体",hero_description:"帮助每个人拥有属于自己的音乐项目<br>从灵感到发行，我们提供音乐制作、项目策划与艺人发展支持。",hero_tags:"Music Production · Vocal Production · Mixing & Mastering · Artist Development",btn_cases:"查看案例",btn_start:"开始合作",build_title:"我们能帮你完成什么",build_sub:"从第一首歌到完整音乐项目，我们提供创作与制作支持。",card1_title:"Music Production",card1_desc:"专属Beat · 编曲设计 · 整曲制作",card2_title:"Artist Development",card2_desc:"单曲/EP/专辑 · 长期艺人企划",card3_title:"Visual Package",card3_desc:"封面设计 · 视觉包装 · 宣传素材",card4_title:"Commercial Projects",card4_desc:"品牌音乐 · 广告定制",why_title:"Hear It Before You Record It",why_text1:"完成编曲后，制作完整人声Demo：演唱风格设计 · 情绪表达 · Flow编排 · 和声细节。",why_text2:"<strong>最终交付的不只是伴奏。</strong> 接近发行版本的完整歌曲。",why_idea:"From Idea → Demo → Recording → Release",flow_title:"一首作品如何诞生",step1_title:"沟通需求",step1_desc:"确定风格与创作方向",step2_title:"开始制作",step2_desc:"完成Beat与整体编排",step3_title:"完整Demo交付",step3_desc:"歌曲框架与人声参考",step4_title:"录制人声",step4_desc:"专业录音室录制",step5_title:"混音母带",step5_desc:"优化听感与动态",step6_title:"完成发布",step6_desc:"发行级成品",drag_hint:"✧ 按住鼠标左键拖动，水平浏览创作流程 ✧",projects_title:"项目案例",projects_sub:"部分完成项目",proj1:"AI RAP ALBUM<br>10 Tracks · 2025",proj2:"Producer Collaboration<br>2025",proj3:"Melodic Trap Single<br>Coming Soon",more_cases:"查看更多案例 →",about_title:"AutoMus1c",about_text:"专注于音乐创作与艺人发展的制作团队。帮助创作者完成从歌曲制作到项目落地全过程。技术会不断变化，但音乐表达始终是核心。",core_title:"核心理念",core_text:"作品优先 · 长期成长 · 共同创作 · 持续进化",contact_title:"Start Your Project",contact_sub:"告诉我们你的想法。剩下的交给我们。",contact_ready:"准备好开始你的音乐项目？直接联系我们，一站式支持。",contact_btn:"开始合作 →",footer:"© 2025 AutoMus1c. 纯黑背景 · 白线钻石纹理 · 新增01 HERO板块"}};
+    translations["zh-TW"]={...translations.zh, nav_home:"首頁",nav_create:"創作",hero_subtitle:"下一代音樂創作集體",hero_description:"幫助每個人擁有屬於自己的音樂項目 從靈感到發行，我們提供音樂製作、項目策劃與藝人發展支持。",btn_cases:"查看案例",btn_start:"開始合作",build_title:"我們能幫你完成什麼",build_sub:"從第一首歌到完整音樂項目，我們提供創作與製作支持。",card1_title:"音樂製作",card1_desc:"專屬Beat · 編曲設計 · 整曲製作",card2_title:"藝人發展",card2_desc:"單曲/EP/專輯 · 長期藝人企劃",card3_title:"視覺包裝",card3_desc:"封面設計 · 視覺包裝 · 宣傳素材",card4_title:"商業項目",card4_desc:"品牌音樂 · 廣告定製",why_title:"在錄音前先聽見作品",why_text1:"完成編曲後，製作完整人聲Demo：演唱風格設計 · 情緒表達 · Flow編排 · 和聲細節。",why_text2:"<strong>最終交付的不只是伴奏。</strong> 接近發行版本的完整歌曲。",why_idea:"從靈感 → Demo → 錄音 → 發行",flow_title:"一首作品如何誕生",drag_hint:"✧ 按住滑鼠左鍵拖曳，水平瀏覽創作流程 ✧",projects_title:"項目案例",projects_sub:"部分完成項目",proj1:"AI 饒舌專輯<br>10 首曲目 · 2025",proj2:"製作人合作<br>2025",proj3:"旋律陷阱單曲<br>即將發行",more_cases:"查看更多案例 →",about_title:"關於 AutoMus1c",about_text:"專注於音樂創作與藝人發展的製作團隊。幫助創作者完成從歌曲製作到項目落地全過程。技術會不斷變化，但音樂表達始終是核心。",core_title:"核心理念",core_text:"作品優先 · 長期成長 · 共同創作 · 持續進化",contact_title:"開始您的項目",contact_sub:"告訴我們你的想法。剩下的交給我們。",contact_ready:"準備好開始你的音樂項目？直接聯繫我們，一站式支持。",contact_btn:"開始合作 →",footer:"© 2025 AutoMus1c. 純黑背景 · 白線鑽石紋理 · 新增01 HERO板塊"};
+    translations.en={nav_home:"Home",nav_create:"Create",nav_idea:"Idea",nav_flow:"Workflow",nav_cases:"Cases",nav_about:"About",nav_contact:"Contact",hero_badge:"01 HERO",hero_title_main:"AUTO MUS1C",hero_subtitle:"Next-Gen Music Collective",hero_description:"Helping everyone own their music project From inspiration to release: music production, project planning & artist development.",hero_tags:"Music Production · Vocal Production · Mixing & Mastering · Artist Development",btn_cases:"View Cases",btn_start:"Start Collab",build_title:"What We Help You Build",build_sub:"From first song to full music project, we provide creative & production support.",card1_title:"Music Production",card1_desc:"Custom Beats · Arrangement · Full Production",card2_title:"Artist Development",card2_desc:"Singles/EP/Album · Long-term planning",card3_title:"Visual Package",card3_desc:"Cover Art · Visual Identity · Promo Assets",card4_title:"Commercial Projects",card4_desc:"Brand Music · Custom Audio",why_title:"Hear It Before You Record It",why_text1:"After arranging, we produce full vocal demo: vocal style design, emotion delivery, flow optimization, harmonies.",why_text2:"<strong>What we deliver is more than a beat.</strong> A near-final song.",why_idea:"From Idea → Demo → Recording → Release",flow_title:"How a Song Comes to Life",step1_title:"Consult",step1_desc:"Define style & creative direction",step2_title:"Start Production",step2_desc:"Beat & overall arrangement",step3_title:"Full Demo",step3_desc:"Song structure & vocal reference",step4_title:"Record Vocals",step4_desc:"Studio recording session",step5_title:"Mix & Master",step5_desc:"Polish dynamics & sound",step6_title:"Release",step6_desc:"Distribution-ready master",drag_hint:"✧ Hold left mouse button and drag to scroll workflow ✧",projects_title:"Projects",projects_sub:"Selected works",proj1:"AI RAP ALBUM<br>10 Tracks · 2025",proj2:"Producer Collaboration<br>2025",proj3:"Melodic Trap Single<br>Coming Soon",more_cases:"More Cases →",about_title:"AutoMus1c",about_text:"A production team focused on music creation and artist development. Helping creators from songwriting to project completion. Technology changes, but musical expression stays core.",core_title:"Core Philosophy",core_text:"Quality First · Long-term Growth · Co-creation · Constant Evolution",contact_title:"Start Your Project",contact_sub:"Tell us your idea. Leave the rest to us.",contact_ready:"Ready to start your music project? Contact us for one-stop support from idea to release.",contact_btn:"Start Collaborating →",footer:"© 2025 AutoMus1c. Pure Black BG · White Diamond Texture · Added 01 HERO Section"};
+    translations.ja={nav_home:"ホーム",nav_create:"制作",nav_idea:"理念",nav_flow:"プロセス",nav_cases:"事例",nav_about:"会社概要",nav_contact:"お問い合わせ",hero_badge:"01 HERO",hero_title_main:"AUTO MUS1C",hero_subtitle:"次世代音楽集団",hero_description:"誰もが自分自身の音楽プロジェクトを持てるように インスピレーションからリリースまで、音楽制作、プロジェクト企画、アーティスト育成をサポート。",hero_tags:"Music Production · Vocal Production · Mixing & Mastering · Artist Development",btn_cases:"事例を見る",btn_start:"共同制作を始める",build_title:"私たちが実現すること",build_sub:"最初の1曲からフルプロジェクトまで、創作と制作をサポートします。",card1_title:"音楽制作",card1_desc:"専用ビート · 編曲 · フル制作",card2_title:"アーティスト育成",card2_desc:"シングル/EP/アルバム · 長期的な企画",card3_title:"ビジュアルパッケージ",card3_desc:"ジャケットデザイン · ブランディング",card4_title:"コマーシャル作品",card4_desc:"ブランドミュージック · カスタム制作",why_title:"レコーディング前に作品を聴く",why_text1:"編曲後、ボーカルデモを制作：歌唱スタイル、感情表現、フローの最適化、ハーモニー詳細。",why_text2:"<strong>最終的に提供するのは伴奏だけではありません。</strong> リリースに近い完成形の楽曲。",why_idea:"アイデア → デモ → レコーディング → リリース",flow_title:"楽曲が生まれるまで",step1_title:"ヒアリング",step1_desc:"方向性を決定",step2_title:"制作開始",step2_desc:"ビートとアレンジ",step3_title:"デモ納品",step3_desc:"歌詞と構成を確定",step4_title:"ボーカル録音",step4_desc:"スタジオ収録",step5_title:"ミックス/マスタリング",step5_desc:"音質を最適化",step6_title:"リリース",step6_desc:"配信可能なマスター",drag_hint:"✧ マウス左ボタンを押したままドラッグして水平スクロール ✧",projects_title:"プロジェクト事例",projects_sub:"一部実績",proj1:"AIラップアルバム<br>10曲 · 2025",proj2:"プロデューサーコラボ<br>2025",proj3:"メロディックトラップシングル<br近日公開",more_cases:"さらに見る →",about_title:"AutoMus1cとは",about_text:"音楽制作とアーティスト育成に特化したチーム。楽曲制作からプロジェクト完了までクリエイターを支援します。テクノロジーは変化しても、音楽表現は常に中心です。",core_title:"核心理念",core_text:"作品優先 · 長期的成長 · 共創 · 継続的進化",contact_title:"プロジェクト開始",contact_sub:"あなたのアイデアを教えてください。あとは私たちにお任せ。",contact_ready:"音楽プロジェクトを始めますか？アイデアからリリースまでワンストップでサポートします。",contact_btn:"共同制作を始める →",footer:"© 2025 AutoMus1c. 漆黒の背景 · ホワイトダイヤモンドテクスチャ · 01 HEROセクション追加"};
     let currentLang='zh';
     function applyLanguage(lang){
         if(!translations[lang]) return;
@@ -345,7 +511,6 @@
         const label=document.getElementById('currentLangLabel');
         if(label){if(lang==='zh') label.innerText='中文'; else if(lang==='zh-TW') label.innerText='繁體'; else if(lang==='en') label.innerText='English'; else if(lang==='ja') label.innerText='日本語';}
         document.querySelectorAll('.lang-option').forEach(opt=>{if(opt.getAttribute('data-lang')===lang) opt.classList.add('active'); else opt.classList.remove('active');});
-        // 动态更改body字体类以优化国际化显示
         document.body.classList.remove('lang-zh', 'lang-zh-TW', 'lang-en', 'lang-ja');
         if(lang === 'zh-TW') document.body.classList.add('lang-zh-TW');
         else if(lang === 'ja') document.body.classList.add('lang-ja');
@@ -354,7 +519,7 @@
     }
     document.querySelectorAll('.lang-option').forEach(opt=>{opt.addEventListener('click',()=>{const lang=opt.getAttribute('data-lang'); if(lang) applyLanguage(lang);});});
     applyLanguage('zh');
-
+    
     const navbar=document.getElementById('navbar'); window.addEventListener('scroll',()=>{if(window.scrollY>20) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');});
     const hamburger=document.getElementById('hamburgerBtn'), mobileNav=document.getElementById('mobileNav'), overlayDiv=document.getElementById('overlay');
     function openMenu(){mobileNav.classList.add('active'); overlayDiv.classList.add('active'); document.body.style.overflow='hidden';}
