@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AUTO MUS1C | ÏîÄ¿°¸Àı ¡¤ ×¨¼­ÓëMVÕ¹Ê¾</title>
+    <title>AUTO MUS1C | é¡¹ç›®æ¡ˆä¾‹ Â· ä¸“è¾‘ä¸MVå±•ç¤º</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -18,7 +18,7 @@
             box-sizing: border-box;
         }
 
-        /* ¹ú¼Ê»¯×ÖÌåÓÅ»¯ */
+        /* å›½é™…åŒ–å­—ä½“ä¼˜åŒ– */
         body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: #000000;
@@ -59,14 +59,14 @@
             --transition-apple: cubic-bezier(0.25, 0.1, 0.15, 1);
         }
 
-        /* ÎŞ¿ª³¡¶¯»­£¬Ö÷ÄÚÈİÖ±½ÓÏÔÊ¾ */
+        /* æ— å¼€åœºåŠ¨ç”»ï¼Œä¸»å†…å®¹ç›´æ¥æ˜¾ç¤º */
         .main-content {
             opacity: 1;
             position: relative;
             z-index: 1;
         }
 
-        /* °å¿éÈ«ÆÁ + ´¿ºÚ±³¾° + ÔöÇ¿White DiamondÎÆÀí */
+        /* æ¿å—å…¨å± + çº¯é»‘èƒŒæ™¯ + å¢å¼ºWhite Diamondçº¹ç† */
         .screen {
             min-height: 100vh;
             width: 100%;
@@ -80,7 +80,7 @@
             background: #000000;
         }
         
-        /* ÔöÇ¿°æ°×É«×êÊ¯ÎÆÀí */
+        /* å¢å¼ºç‰ˆç™½è‰²é’»çŸ³çº¹ç† */
         .screen::after {
             content: "";
             position: absolute;
@@ -109,7 +109,7 @@
         .screen > * { position: relative; z-index: 2; }
         html { scroll-snap-type: y mandatory; }
 
-        /* ¶¯Ì¬Á£×Ó»­²¼ */
+        /* åŠ¨æ€ç²’å­ç”»å¸ƒ */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -121,7 +121,7 @@
             opacity: 0.35;
         }
 
-        /* µ¼º½À¸ */
+        /* å¯¼èˆªæ  */
         .navbar {
             position: fixed;
             top: 0;
@@ -145,7 +145,7 @@
         .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: #FFFFFF; transition: width 0.3s var(--transition-apple); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-        /* ÓïÑÔÇĞ»»Æ÷ */
+        /* è¯­è¨€åˆ‡æ¢å™¨ */
         .lang-selector { position: relative; margin-left: 0.5rem; cursor: pointer; }
         .lang-current { display: flex; align-items: center; gap: 0.4rem; background: rgba(20,20,20,0.7); backdrop-filter: blur(4px); padding: 0.4rem 0.8rem; border-radius: 40px; font-size: 0.8rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.2); }
         .lang-current i { font-size: 0.7rem; }
@@ -164,7 +164,7 @@
 
         .container { max-width: 1280px; width: 100%; margin: 0 auto; }
         
-        /* °¸ÀıÕ¹Ê¾Íø¸ñ */
+        /* æ¡ˆä¾‹å±•ç¤ºç½‘æ ¼ */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -239,7 +239,7 @@
             font-size: 1.1rem;
         }
 
-        /* °´Å¥ÑùÊ½ÓëÖ÷Õ¾Ò»ÖÂ */
+        /* æŒ‰é’®æ ·å¼ä¸ä¸»ç«™ä¸€è‡´ */
         .btn-primary, .btn-outline {
             padding: 0.9rem 2.2rem;
             border-radius: 60px;
@@ -320,50 +320,50 @@
 <div class="cursor-glow" id="cursorGlow"></div>
 <canvas id="bg-canvas"></canvas>
 
-<!-- ÎŞ¿ª³¡¶¯»­£¬Ö÷ÄÚÈİÖ±½ÓÏÔÊ¾ -->
+<!-- æ— å¼€åœºåŠ¨ç”»ï¼Œä¸»å†…å®¹ç›´æ¥æ˜¾ç¤º -->
 <div class="main-content" id="mainContent">
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo-area">
-                <img class="LOGO.jpg" alt="logo">
+                <img class="nav-logo-img" src="LOGO.jpg" alt="logo">
                 <div class="logo">AUTO<span>MUS1C</span></div>
             </div>
             <div class="nav-links">
-                <!-- Ö÷Ò³Á´½ÓÖ¸ÏòÖ÷Õ¾ index.html -->
-                <a href="index.html" data-key="nav_home">Ê×Ò³</a>
-                <!-- µ±Ç°Ò³ÃæÎª°¸ÀıÕ¹Ê¾£¬¸ßÁÁ -->
-                <a href="#" class="active" data-key="nav_cases">°¸Àı</a>
-                <!-- ÒÑÈ¥µô¡°¹ØÓÚ¡±ºÍ¡°ÁªÂç¡±²Ëµ¥Ïî -->
-                <div class="lang-selector"><div class="lang-current"><span id="currentLangLabel">ÖĞÎÄ</span> <i class="fas fa-chevron-down"></i></div><div class="lang-dropdown"><div class="lang-option" data-lang="zh">¼òÌåÖĞÎÄ</div><div class="lang-option" data-lang="zh-TW">·±ówÖĞÎÄ</div><div class="lang-option" data-lang="en">English</div><div class="lang-option" data-lang="ja">ÈÕ±¾ÕZ</div></div></div>
+                <!-- ä¸»é¡µé“¾æ¥æŒ‡å‘ä¸»ç«™ index.html -->
+                <a href="index.html" data-key="nav_home">é¦–é¡µ</a>
+                <!-- å½“å‰é¡µé¢ä¸ºæ¡ˆä¾‹å±•ç¤ºï¼Œé«˜äº® -->
+                <a href="#" class="active" data-key="nav_cases">æ¡ˆä¾‹</a>
+                <!-- å·²å»æ‰â€œå…³äºâ€å’Œâ€œè”ç»œâ€èœå•é¡¹ -->
+                <div class="lang-selector"><div class="lang-current"><span id="currentLangLabel">ä¸­æ–‡</span> <i class="fas fa-chevron-down"></i></div><div class="lang-dropdown"><div class="lang-option" data-lang="zh">ç®€ä½“ä¸­æ–‡</div><div class="lang-option" data-lang="zh-TW">ç¹é«”ä¸­æ–‡</div><div class="lang-option" data-lang="en">English</div><div class="lang-option" data-lang="ja">æ—¥æœ¬èª</div></div></div>
             </div>
             <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button>
         </div>
     </nav>
     <div class="mobile-nav" id="mobileNav">
-        <a href="index.html">Ê×Ò³</a>
-        <a href="#">°¸Àı</a>
-        <!-- ÒÆ¶¯¶Ë²Ëµ¥Ò²È¥µô¡°¹ØÓÚ¡±ºÍ¡°ÁªÂç¡± -->
+        <a href="index.html">é¦–é¡µ</a>
+        <a href="#">æ¡ˆä¾‹</a>
+        <!-- ç§»åŠ¨ç«¯èœå•ä¹Ÿå»æ‰â€œå…³äºâ€å’Œâ€œè”ç»œâ€ -->
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- °¸ÀıÕ¹Ê¾°å¿é -->
+    <!-- æ¡ˆä¾‹å±•ç¤ºæ¿å— -->
     <section class="screen">
         <div class="container">
-            <h2 class="section-title" data-key="works_title">ÏîÄ¿°¸Àı</h2>
-            <p class="section-sub" data-key="works_sub">×¨¼­ ¡¤ MV ¡¤ ÊÓ¾õ×÷Æ·</p>
+            <h2 class="section-title" data-key="works_title">é¡¹ç›®æ¡ˆä¾‹</h2>
+            <p class="section-sub" data-key="works_sub">ä¸“è¾‘ Â· MV Â· è§†è§‰ä½œå“</p>
             <div class="projects-grid">
-                <!-- ×¨¼­°¸Àı 1 -->
+                <!-- ä¸“è¾‘æ¡ˆä¾‹ 1 -->
                 <div class="project-card">
                     <div class="project-media">
-                        <img src="https://picsum.photos/id/29/600/400" alt="Album Cover 1">
+                        <img src="TITLE PAGE.jpg" alt="Album Cover 1">
                     </div>
                     <div class="project-info">
-                        <span class="type" data-key="type_album">×¨¼­</span>
-                        <h3 data-key="album1_title">¡¶ÄŞºçÂö²«¡·</h3>
-                        <p data-key="album1_desc">µç×ÓÁ÷ĞĞ ¡¤ 2024 ¡¤ È«Íø²¥·ÅÁ¿ÆÆ5000Íò</p>
+                        <span class="type" data-key="type_album">ä¸“è¾‘</span>
+                        <h3 data-key="album1_title">ã€ŠWORK 1ã€‹</h3>
+                        <p data-key="album1_desc">NO RESULT</p>
                     </div>
                 </div>
-                <!-- MV °¸Àı 1 -->
+                <!-- MV æ¡ˆä¾‹ 1 -->
                 <div class="project-card">
                     <div class="project-media">
                         <video controls poster="https://picsum.photos/id/104/600/400">
@@ -372,73 +372,73 @@
                     </div>
                     <div class="project-info">
                         <span class="type" data-key="type_mv">MV</span>
-                        <h3 data-key="mv1_title">¡¸¹²ÕñÏÖ³¡¡¹LIVE MV</h3>
-                        <p data-key="mv1_desc">³Á½şÊ½ÒôÀÖÏÖ³¡¼ÍÊµ ¡¤ µ¼Ñİ¼ô¼­°æ</p>
+                        <h3 data-key="mv1_title">ã€ŒWORK 2ã€LIVE MV</h3>
+                        <p data-key="mv1_desc">æ²‰æµ¸å¼éŸ³ä¹ç°åœºçºªå® Â· å¯¼æ¼”å‰ªè¾‘ç‰ˆ</p>
                     </div>
                 </div>
-                <!-- ×¨¼­°¸Àı 2 -->
+                <!-- ä¸“è¾‘æ¡ˆä¾‹ 2 -->
                 <div class="project-card">
                     <div class="project-media">
-                        <img src="https://picsum.photos/id/107/600/400" alt="Album Cover 2">
+                        <img src="TITLE PAGE.jpg" alt="Album Cover 2">
                     </div>
                     <div class="project-info">
-                        <span class="type" data-key="type_album">×¨¼­</span>
-                        <h3 data-key="album2_title">¡¶ÉîÀ¶ĞğÊÂ¡·</h3>
-                        <p data-key="album2_desc">Æ÷ÀÖÒ¡¹ö/·ÕÎ§ ¡¤ Êı×Ö×¨¼­ ¡¤ 2025</p>
+                        <span class="type" data-key="type_album">ä¸“è¾‘</span>
+                        <h3 data-key="album2_title">ã€ŠWORK 3ã€‹</h3>
+                        <p data-key="album2_desc">NO RESULT</p>
                     </div>
                 </div>
-                <!-- MV °¸Àı 2 -->
+                <!-- MV æ¡ˆä¾‹ 2 -->
                 <div class="project-card">
                     <div class="project-media">
                         <img src="https://picsum.photos/id/169/600/400" alt="MV Still">
                     </div>
                     <div class="project-info">
                         <span class="type" data-key="type_mv">MV</span>
-                        <h3 data-key="mv2_title">¡¶³ÇÊĞÔÂ¹â¡·Official MV</h3>
-                        <p data-key="mv2_desc">ÃÎ»ÃÁ÷ĞĞ ¡¤ ÊÓ¾õĞğÊÂ ¡¤ 2025</p>
+                        <h3 data-key="mv2_title">WORK 4</h3>
+                        <p data-key="mv2_desc">NO RESULT</p>
                     </div>
                 </div>
-                <!-- ×¨¼­°¸Àı 3 -->
+                <!-- ä¸“è¾‘æ¡ˆä¾‹ 3 -->
                 <div class="project-card">
                     <div class="project-media">
-                        <img src="https://picsum.photos/id/155/600/400" alt="EP Cover">
+                        <img src="TITLE PAGE.jpg" alt="EP Cover">
                     </div>
                     <div class="project-info">
                         <span class="type" data-key="type_ep">EP</span>
-                        <h3 data-key="ep1_title">¡¶»ìãçÀíÂÛ¡·EP</h3>
-                        <p data-key="ep1_desc">ÊµÑéµç×Ó ¡¤ 4Ê×ÇúÄ¿ ¡¤ 2025</p>
+                        <h3 data-key="ep1_title">ã€ŠWORK 5ã€‹EP</h3>
+                        <p data-key="ep1_desc">NO RESULT</p>
                     </div>
                 </div>
-                <!-- ×¨¼­°¸Àı 4 -->
+                <!-- ä¸“è¾‘æ¡ˆä¾‹ 4 -->
                 <div class="project-card">
                     <div class="project-media">
-                        <img src="https://picsum.photos/id/42/600/400" alt="Album Cover 4">
+                        <img src="TITLE PAGE.jpg" alt="Album Cover 4">
                     </div>
                     <div class="project-info">
-                        <span class="type" data-key="type_album">×¨¼­</span>
-                        <h3 data-key="album3_title">¡¶ÎŞ¾¡Ñ­»·¡·</h3>
-                        <p data-key="album3_desc">¶ÀÁ¢Ò¡¹ö ¡¤ ÊµÌå+Êı×Ö·¢ĞĞ</p>
+                        <span class="type" data-key="type_album">ä¸“è¾‘</span>
+                        <h3 data-key="album3_title">ã€Šwork 6ã€‹</h3>
+                        <p data-key="album3_desc">No result</p>
                     </div>
                 </div>
             </div>
-            <!-- ·µ»ØÖ÷Õ¾µÄ°´Å¥ -->
+            <!-- è¿”å›ä¸»ç«™çš„æŒ‰é’® -->
             <div style="text-align: center; margin-top: 3rem;">
-                <a href="index.html" class="btn-outline" data-key="back_home">·µ»ØÖ÷Ò³ ¡ú</a>
+                <a href="index.html" class="btn-outline" data-key="back_home">è¿”å›ä¸»é¡µ â†’</a>
             </div>
         </div>
     </section>
 
-    <footer><p data-key="footer"> 2025 AutoMus1c. ÏîÄ¿°¸ÀıÕ¹Ê¾ ¡¤ ·ç¸ñÑÓĞø</p></footer>
+    <footer><p data-key="footer">Â© 2025 AutoMus1c. é¡¹ç›®æ¡ˆä¾‹å±•ç¤º Â· é£æ ¼å»¶ç»­</p></footer>
 </div>
 
 <script>
-    // ÎŞ¿ª³¡¶¯»­£¬Ö±½ÓÖ´ĞĞ½»»¥
+    // æ— å¼€åœºåŠ¨ç”»ï¼Œç›´æ¥æ‰§è¡Œäº¤äº’
     
-    // Êó±ê¸úËæ¹âÔÎ
+    // é¼ æ ‡è·Ÿéšå…‰æ™•
     const glow = document.getElementById('cursorGlow');
     document.addEventListener('mousemove', (e) => { gsap.to(glow, { duration: 0.2, x: e.clientX, y: e.clientY, ease: "power2.out" }); });
     
-    // ¶¯Ì¬Á£×Ó»­²¼
+    // åŠ¨æ€ç²’å­ç”»å¸ƒ
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth, height = window.innerHeight;
@@ -450,13 +450,13 @@
     function drawLines() { ctx.clearRect(0,0,width,height); ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 0.8; for(let i=0;i<particles.length;i++) { let p=particles[i]; p.x+=p.vx; p.y+=p.vy; if(p.x<0) p.x=width; if(p.x>width) p.x=0; if(p.y<0) p.y=height; if(p.y>height) p.y=0; for(let j=i+1;j<particles.length;j++) { let q=particles[j]; let dx=p.x-q.x, dy=p.y-q.y, dist=Math.hypot(dx,dy); if(dist<120) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); } } } requestAnimationFrame(drawLines); }
     drawLines();
     
-    // GSAP ¹ö¶¯µ­ÈëĞ§¹û
+    // GSAP æ»šåŠ¨æ·¡å…¥æ•ˆæœ
     gsap.registerPlugin(ScrollTrigger);
     gsap.utils.toArray('.project-card').forEach(card => {
         gsap.from(card, { opacity: 0, y: 50, duration: 0.7, scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" } });
     });
     
-    // ºº±¤²Ëµ¥Âß¼­
+    // æ±‰å ¡èœå•é€»è¾‘
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileNav = document.getElementById('mobileNav');
     const overlayDiv = document.getElementById('overlay');
@@ -468,63 +468,63 @@
         link.addEventListener('click', (e) => { closeMenu(); });
     });
     
-    // µ¼º½À¸¹ö¶¯Ğ§¹û
+    // å¯¼èˆªæ æ»šåŠ¨æ•ˆæœ
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => { if(window.scrollY > 20) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled'); });
     
-    // ¶àÓïÑÔÖ§³Ö£¨ÓëÖ÷Õ¾´Ê¿â±£³ÖÒ»ÖÂ£©
+    // å¤šè¯­è¨€æ”¯æŒï¼ˆä¸ä¸»ç«™è¯åº“ä¿æŒä¸€è‡´ï¼‰
     const translations = {
         zh: {
-            nav_home: "Ê×Ò³", nav_cases: "°¸Àı",
-            works_title: "ÏîÄ¿°¸Àı", works_sub: "×¨¼­ ¡¤ MV ¡¤ ÊÓ¾õ×÷Æ·",
-            type_album: "×¨¼­", type_mv: "MV", type_ep: "EP",
-            album1_title: "¡¶ÄŞºçÂö²«¡·", album1_desc: "µç×ÓÁ÷ĞĞ ¡¤ 2024 ¡¤ È«Íø²¥·ÅÁ¿ÆÆ5000Íò",
-            mv1_title: "¡¸¹²ÕñÏÖ³¡¡¹LIVE MV", mv1_desc: "³Á½şÊ½ÒôÀÖÏÖ³¡¼ÍÊµ ¡¤ µ¼Ñİ¼ô¼­°æ",
-            album2_title: "¡¶ÉîÀ¶ĞğÊÂ¡·", album2_desc: "Æ÷ÀÖÒ¡¹ö/·ÕÎ§ ¡¤ Êı×Ö×¨¼­ ¡¤ 2025",
-            mv2_title: "¡¶³ÇÊĞÔÂ¹â¡·Official MV", mv2_desc: "ÃÎ»ÃÁ÷ĞĞ ¡¤ ÊÓ¾õĞğÊÂ ¡¤ 2025",
-            ep1_title: "¡¶»ìãçÀíÂÛ¡·EP", ep1_desc: "ÊµÑéµç×Ó ¡¤ 4Ê×ÇúÄ¿ ¡¤ 2025",
-            album3_title: "¡¶ÎŞ¾¡Ñ­»·¡·", album3_desc: "¶ÀÁ¢Ò¡¹ö ¡¤ ÊµÌå+Êı×Ö·¢ĞĞ",
-            back_home: "·µ»ØÖ÷Ò³ ¡ú",
-            footer: " 2025 AutoMus1c. ÏîÄ¿°¸ÀıÕ¹Ê¾ ¡¤ ·ç¸ñÑÓĞø"
+            nav_home: "é¦–é¡µ", nav_cases: "æ¡ˆä¾‹",
+            works_title: "é¡¹ç›®æ¡ˆä¾‹", works_sub: "ä¸“è¾‘ Â· MV Â· è§†è§‰ä½œå“",
+            type_album: "ä¸“è¾‘", type_mv: "MV", type_ep: "EP",
+            album1_title: "ã€Šã€‹", album1_desc: "NO RESULT",
+            mv1_title: "ã€Œã€LIVE MV", mv1_desc: "",
+            album2_title: "ã€Šã€‹", album2_desc: "",
+            mv2_title: "ã€Šã€‹Official MV", mv2_desc: "",
+            ep1_title: "ã€Šã€‹EP", ep1_desc: "",
+            album3_title: "ã€Šã€‹", album3_desc: "",
+            back_home: "è¿”å›ä¸»é¡µ â†’",
+            footer: "Â© 2025 AutoMus1c. é¡¹ç›®æ¡ˆä¾‹å±•ç¤º Â· é£æ ¼å»¶ç»­"
         },
         "zh-TW": {
-            nav_home: "Ê×í“", nav_cases: "°¸Àı",
-            works_title: "í—Ä¿°¸Àı", works_sub: "Œ£İ‹ ¡¤ MV ¡¤ Ò•ÓX×÷Æ·",
-            type_album: "Œ£İ‹", type_mv: "MV", type_ep: "EP",
-            album1_title: "¡¶ÄŞºçÃ}²«¡·", album1_desc: "ëŠ×ÓÁ÷ĞĞ ¡¤ 2024 ¡¤ È«¾W²¥·ÅÁ¿ÆÆ5000Èf",
-            mv1_title: "¡¸¹²Õñ¬Fˆö¡¹LIVE MV", mv1_desc: "³Á½şÊ½Òô˜·¬Fˆö¼oŒ ¡¤ Œ§Ñİ¼ôİ‹°æ",
-            album2_title: "¡¶ÉîË{”¢ÊÂ¡·", album2_desc: "Æ÷˜·“uL/·Õ‡ú ¡¤ ”µ×ÖŒ£İ‹ ¡¤ 2025",
-            mv2_title: "¡¶³ÇÊĞÔÂ¹â¡·Official MV", mv2_desc: "‰ô»ÃÁ÷ĞĞ ¡¤ Ò•ÓX”¢ÊÂ ¡¤ 2025",
-            ep1_title: "¡¶»ìãçÀíÕ“¡·EP", ep1_desc: "ŒòëŠ×Ó ¡¤ 4Ê×ÇúÄ¿ ¡¤ 2025",
-            album3_title: "¡¶Ÿo±MÑ­­h¡·", album3_desc: "ªšÁ¢“uL ¡¤ Œów+”µ×Ö°lĞĞ",
-            back_home: "·µ»ØÖ÷í“ ¡ú",
-            footer: " 2025 AutoMus1c. í—Ä¿°¸ÀıÕ¹Ê¾ ¡¤ ïL¸ñÑÓÀm"
+            nav_home: "é¦–é ", nav_cases: "æ¡ˆä¾‹",
+            works_title: "é …ç›®æ¡ˆä¾‹", works_sub: "å°ˆè¼¯ Â· MV Â· è¦–è¦ºä½œå“",
+            type_album: "å°ˆè¼¯", type_mv: "MV", type_ep: "EP",
+            album1_title: "ã€Šã€‹", album1_desc: "",
+            mv1_title: "ã€Œã€LIVE MV", mv1_desc: "",
+            album2_title: "ã€Šã€‹", album2_desc: "",
+            mv2_title: "ã€Šã€‹Official MV", mv2_desc: "",
+            ep1_title: "ã€Šã€‹EP", ep1_desc: "",
+            album3_title: "ã€Šã€‹", album3_desc: "",
+            back_home: "è¿”å›ä¸»é  â†’",
+            footer: "Â© 2025 AutoMus1c. é …ç›®æ¡ˆä¾‹å±•ç¤º Â· é¢¨æ ¼å»¶çºŒ"
         },
         en: {
             nav_home: "Home", nav_cases: "Works",
-            works_title: "Projects", works_sub: "Albums ¡¤ MVs ¡¤ Visuals",
+            works_title: "Projects", works_sub: "Albums Â· MVs Â· Visuals",
             type_album: "Album", type_mv: "Music Video", type_ep: "EP",
-            album1_title: "Neon Pulse", album1_desc: "Electronic Pop ¡¤ 2024 ¡¤ 50M+ streams",
-            mv1_title: "Resonance Live MV", mv1_desc: "Immersive Live Session ¡¤ Director's Cut",
-            album2_title: "Deep Blue Narrative", album2_desc: "Instrumental Rock / Ambient ¡¤ 2025",
-            mv2_title: "City Moonlight Official MV", mv2_desc: "Dream Pop ¡¤ Visual Storytelling ¡¤ 2025",
-            ep1_title: "Chaos Theory EP", ep1_desc: "Experimental Electronic ¡¤ 4 tracks ¡¤ 2025",
-            album3_title: "Endless Loop", album3_desc: "Indie Rock ¡¤ Physical + Digital",
-            back_home: "Back to Home ¡ú",
-            footer: " 2025 AutoMus1c. Project Showcase ¡¤ Consistent Style"
+            album1_title: "Neon Pulse", album1_desc: "Electronic Pop Â· 2024 Â· 50M+ streams",
+            mv1_title: "Resonance Live MV", mv1_desc: "Immersive Live Session Â· Director's Cut",
+            album2_title: "Deep Blue Narrative", album2_desc: "Instrumental Rock / Ambient Â· 2025",
+            mv2_title: "City Moonlight Official MV", mv2_desc: "Dream Pop Â· Visual Storytelling Â· 2025",
+            ep1_title: "Chaos Theory EP", ep1_desc: "Experimental Electronic Â· 4 tracks Â· 2025",
+            album3_title: "Endless Loop", album3_desc: "Indie Rock Â· Physical + Digital",
+            back_home: "Back to Home â†’",
+            footer: "Â© 2025 AutoMus1c. Project Showcase Â· Consistent Style"
         },
         ja: {
-            nav_home: "¥Û©`¥à", nav_cases: "ÊÂÀı",
-            works_title: "¥×¥í¥¸¥§¥¯¥ÈÊÂÀı", works_sub: "¥¢¥ë¥Ğ¥à ¡¤ MV ¡¤ ¥Ó¥¸¥å¥¢¥ë",
-            type_album: "¥¢¥ë¥Ğ¥à", type_mv: "MV", type_ep: "EP",
-            album1_title: "¡º¥Í¥ª¥ó¥Ñ¥ë¥¹¡»", album1_desc: "¥¨¥ì¥¯¥È¥í¥İ¥Ã¥× ¡¤ 2024 ¡¤ 5000Íò»ØÔÙÉúÍ»ÆÆ",
-            mv1_title: "¡¸¹²Õñ¬Fˆö¡¹LIVE MV", mv1_desc: "Ã»ÈëĞÍ¥é¥¤¥Ö¥É¥­¥å¥á¥ó¥¿¥ê©` ¡¤ ¥Ç¥£¥ì¥¯¥¿©`¥º¥«¥Ã¥È",
-            album2_title: "¡ºÉîÇà¤ÎĞğÊÂ¡»", album2_desc: "¥¤¥ó¥¹¥È¥¥¥ë¥á¥ó¥¿¥ë¥í¥Ã¥¯/¥¢¥ó¥Ó¥¨¥ó¥È ¡¤ 2025",
-            mv2_title: "¡º¥·¥Æ¥£¥à©`¥ó¥é¥¤¥È¡»¹«Ê½MV", mv2_desc: "¥É¥ê©`¥à¥İ¥Ã¥× ¡¤ ¥Ó¥¸¥å¥¢¥ë¥¹¥È©`¥ê©`¥Æ¥ê¥ó¥° ¡¤ 2025",
-            ep1_title: "¡º¥«¥ª¥¹ÀíÕ“¡»EP", ep1_desc: "ŒgòYµÄ¥¨¥ì¥¯¥È¥í¥Ë¥« ¡¤ 4¥È¥é¥Ã¥¯ ¡¤ 2025",
-            album3_title: "¡ºŸoÏŞ¥ë©`¥×¡»", album3_desc: "¥¤¥ó¥Ç¥£©`¥í¥Ã¥¯ ¡¤ ŒgÌå+¥Ç¥¸¥¿¥ë",
-            back_home: "¥Û©`¥à¤Ë‘ø¤ë ¡ú",
-            footer: " 2025 AutoMus1c. ¥×¥í¥¸¥§¥¯¥ÈÊÂÀı ¡¤ Ò»Ø¤·¤¿¥¹¥¿¥¤¥ë"
+            nav_home: "ãƒ›ãƒ¼ãƒ ", nav_cases: "äº‹ä¾‹",
+            works_title: "", works_sub: "ã‚¢ãƒ«ãƒãƒ  Â· MV Â· ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«",
+            type_album: "", type_mv: "MV", type_ep: "EP",
+            album1_title: "ã€ã€", album1_desc: "",
+            mv1_title: "ã€Œã€LIVE MV", mv1_desc: "",
+            album2_title: "ã€ã€", album2_desc: "",
+            mv2_title: "ã€ã€å…¬å¼MV", mv2_desc: "",
+            ep1_title: "ã€ã€EP", ep1_desc: "",
+            album3_title: "ã€ã€", album3_desc: "",
+            back_home: "ãƒ›ãƒ¼ãƒ ã«æˆ»ã‚‹ â†’",
+            footer: "Â© 2025 AutoMus1c. ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆäº‹ä¾‹ Â· ä¸€è²«ã—ãŸã‚¹ã‚¿ã‚¤ãƒ«"
         }
     };
     let currentLang = 'zh';
@@ -544,10 +544,10 @@
         });
         const label = document.getElementById('currentLangLabel');
         if (label) {
-            if (lang === 'zh') label.innerText = 'ÖĞÎÄ';
-            else if (lang === 'zh-TW') label.innerText = '·±ów';
+            if (lang === 'zh') label.innerText = 'ä¸­æ–‡';
+            else if (lang === 'zh-TW') label.innerText = 'ç¹é«”';
             else if (lang === 'en') label.innerText = 'English';
-            else if (lang === 'ja') label.innerText = 'ÈÕ±¾ÕZ';
+            else if (lang === 'ja') label.innerText = 'æ—¥æœ¬èª';
         }
         document.querySelectorAll('.lang-option').forEach(opt => {
             if (opt.getAttribute('data-lang') === lang) opt.classList.add('active');
@@ -566,3 +566,4 @@
 </script>
 </body>
 </html>
+
